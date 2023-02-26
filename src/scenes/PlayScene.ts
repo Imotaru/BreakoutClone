@@ -37,7 +37,7 @@ class GameScene extends Phaser.Scene {
 		// @ts-ignore
 		this.load.audio('damage', '/assets/sounds/damage.wav');
 		// @ts-ignore
-		this.load.audio('music5', '/assets/sounds/Hades - God of the Dead Second Half.mp3');
+		// this.load.audio('music5', '/assets/sounds/.mp3');
 	}
 
 	create() {
@@ -48,11 +48,11 @@ class GameScene extends Phaser.Scene {
 		this.ballHit = this.sound.add('ballHit');
 		this.damageSound = this.sound.add('damage');
 		this.loseLife = this.sound.add('loseLife');
-		let music = this.sound.add('music5', {
-			loop: true,
-			volume: 0.1,
-		});
-		music.play();
+		// let music = this.sound.add('music5', {
+		// 	loop: true,
+		// 	volume: 0.1,
+		// });
+		// music.play();
 		
 		this.livesText = this.add.text(30, GeneralConsts.SCREEN_HEIGHT - 50, "Lives: 3", { fontFamily: 'Arial', fontSize: 32, color: '#ffffff' });
 		this.scoreText = this.add.text(250, GeneralConsts.SCREEN_HEIGHT - 50, "Score: 0", { fontFamily: 'Arial', fontSize: 32, color: '#ffffff' });
