@@ -1,0 +1,18 @@
+{
+	"compilerOptions": {
+		"target": "es5",
+		"module": "commonjs",
+		"sourceMap": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+	},
+	
+	"files": [
+		"src/phaser.d.ts",
+		"src/main.ts",
+		"src/BallConsts.ts",
+		"src/GeneralConsts.ts",
+		"src/GameObjects/PlayerPaddle.ts",
+		"src/GameObjects/Ball.ts",
+	]
+}
