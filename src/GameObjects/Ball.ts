@@ -4,14 +4,14 @@ import {GeneralConsts} from "../GeneralConsts";
 import {PlayerPaddle} from "./PlayerPaddle";
 
 export class Ball extends Phaser.GameObjects.GameObject {
-    // private speed: number;
+    public speed: number;
     public sprite: Phaser.GameObjects.Image;
     // private direction: Direction;
     
     constructor(scene: Phaser.Scene, ballSprite: Phaser.GameObjects.Image) {
         super(scene, 'ball');
         // this.direction = Math.random() <= 0.5 ? Direction.DownLeft : Direction.DownRight;  // 50 / 50 chance to start going DownLeft or DownRight
-        // this.speed = BallConsts.DEFAULT_BALL_SPEED;
+        this.speed = BallConsts.DEFAULT_BALL_SPEED;
         this.sprite = ballSprite;
         this.sprite.displayWidth = 24;
         this.sprite.displayHeight = 24;
