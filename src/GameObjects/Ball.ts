@@ -8,7 +8,7 @@ export class Ball extends Phaser.GameObjects.GameObject {
     public sprite: Phaser.GameObjects.Image;
     // private direction: Direction;
     
-    constructor(scene: Phaser.Scene, x: number, y: number, ballSprite: Phaser.GameObjects.Image, playerPaddle: PlayerPaddle, physics: any) {
+    constructor(scene: Phaser.Scene, ballSprite: Phaser.GameObjects.Image) {
         super(scene, 'ball');
         // this.direction = Math.random() <= 0.5 ? Direction.DownLeft : Direction.DownRight;  // 50 / 50 chance to start going DownLeft or DownRight
         // this.speed = BallConsts.DEFAULT_BALL_SPEED;

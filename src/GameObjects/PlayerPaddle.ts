@@ -5,16 +5,16 @@ export class PlayerPaddle extends Phaser.GameObjects.GameObject {
     private speed: number;
     public sprite: Phaser.GameObjects.Image;
     
-    constructor(scene: Phaser.Scene, x: number, y: number, playerSprite: Phaser.GameObjects.Image, physics: any) {
+    constructor(scene: Phaser.Scene, playerSprite: Phaser.GameObjects.Image) {
         super(scene, 'player');
-        this.speed = 480;
+        this.speed = 480; // todo brian needs to be const
         this.sprite = playerSprite;
         this.sprite.displayWidth = 76;
         this.sprite.displayHeight = 22;
     }
   
     player_update(time: number, delta: number, cursors: any) {
-        let speedDelta = 480 * delta / 1000;
+        let speedDelta = this.speed * delta / 1000;
         if (cursors.left.isDown) {
             this.sprite.x -= speedDelta;
             if (this.sprite.x < 0) {
