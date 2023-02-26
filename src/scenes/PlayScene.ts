@@ -67,24 +67,25 @@ class GameScene extends Phaser.Scene {
 		this.bottomBorder.displayWidth = GeneralConsts.SCREEN_WIDTH;
 		this.bottomBorder.displayHeight = 4;
 		this.playerPaddle = new PlayerPaddle(this, playerSprite);
+
+		// reason I'm using a list of images instead of a group is because I wasn't sure how to scale the images in a group
+		this.brickList = [];
+		for (let i = 0; i < 8; i++) {
+			for (let j = 0; j < 14; j++) {
+				let brickSprite = this.physics.add.image(30 + j * 70 + (i % 2) * 40, 70 + i * 30, 'bush')
+					.setImmovable(true);
+				this.brickList.push(new Brick(this, brickSprite, 8 - i));
+			}
+		}
+		
 		
 		// initially I had the ball detect when it hits something and manually change direction, but then I found this method which is far more simple
 		this.ballSprite = this.physics.add.image(centerX, centerY, 'ball')
 			.setVelocity(BallConsts.DEFAULT_BALL_SPEED, BallConsts.DEFAULT_BALL_SPEED)
 			.setBounce(1, 1)
 			.setCollideWorldBounds(true);
-		
-		this.ball = new Ball(this, this.ballSprite);
 
-		// reason I'm using a list of images instead of a group is because I wasn't sure how to scale the images in a group
-		this.brickList = [];
-		for (let i = 0; i < 8; i++) {
-			for (let j = 0; j < 14; j++) {
-				let brickSprite = this.physics.add.image(30 + j * 70 + (i % 2) * 40, 200 + i * 30, 'bush')
-					.setImmovable(true);
-				this.brickList.push(new Brick(this, brickSprite, i + 1));
-			}
-		}
+		this.ball = new Ball(this, this.ballSprite);
 
 		// @ts-ignore
 		this.physics.add.collider(this.ballSprite, playerSprite);
@@ -111,18 +112,20 @@ class GameScene extends Phaser.Scene {
 			}
 			if (!this.brickList[i].sprite.body.touching.none) {
 				this.damageSound.play();
+				this.add_score(this.brickList[i].score);
 				this.brickList[i].sprite.destroy();
 				this.brickList[i] = null;
-				this.add_score(this.brickList[i].score);
 			}
 		}
 		// will make the ball move based on the player's momentum, so if you're moving left the ball will always go left and vice versa
 		if (!this.playerPaddle.sprite.body.touching.none) {
-			if (this.cursors.left.isDown) {
-				this.ballSprite.body.setVelocity(-this.ball.speed, -this.ball.speed);
-			}
-			if (this.cursors.right.isDown) {
-				this.ballSprite.body.setVelocity(this.ball.speed, -this.ball.speed);
+			if (!this.cursors.left.isDown || !this.cursors.right.isDown) {
+				if (this.cursors.left.isDown) {
+					this.ballSprite.body.setVelocity(-this.ball.speed, -this.ball.speed);
+				}
+				if (this.cursors.right.isDown) {
+					this.ballSprite.body.setVelocity(this.ball.speed, -this.ball.speed);
+				}
 			}
 		}
 	}
