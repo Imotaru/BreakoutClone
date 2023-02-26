@@ -1,14 +1,9 @@
-import {Ball} from "../GameObjects/Ball";
-import {GeneralConsts} from "../GeneralConsts";
-import {PlayerPaddle} from "../GameObjects/PlayerPaddle";
-import {BallConsts} from "../BallConsts";
-import {Brick} from "../GameObjects/Brick";
 import {GameManager} from "../GameManager";
 import {SoundClip, SoundManager} from "../SoundManager";
 
 class GameScene extends Phaser.Scene {
 	// scripts
-	gameManager: GameManager;
+	gm: GameManager;
 	soundManager: SoundManager;
 	
 	// input
@@ -34,49 +29,57 @@ class GameScene extends Phaser.Scene {
 	}
 
 	create() {
-		this.gameManager = new GameManager(this);
+		this.gm = new GameManager(this);
 		this.soundManager = new SoundManager(this);
 		this.cursors = this.input.keyboard.createCursorKeys();
 	}
 	
 	update(time: number, delta:number) {
-		this.gameManager.playerPaddle.player_update(time, delta, this.cursors);
+		this.gm.playerPaddle.player_update(time, delta, this.cursors);
 		
-		if (this.gameManager.isBallResting) {
+		// if ball is resting then the up arrow make it start, else the ball just follows the paddle on the x axis
+		if (this.gm.isBallResting) {
 			if (this.cursors.up.isDown) {
-				this.gameManager.start_ball_moving(this.cursors);
+				this.gm.start_ball_moving(this.cursors);
 			}
-			this.gameManager.ball.sprite.x = this.gameManager.playerPaddle.sprite.x;
+			this.gm.ball.sprite.x = this.gm.playerPaddle.sprite.x;
+			// we return because the logic below only matters if the ball is in play, so it's better for performance to return here
 			return;
 		}
 		
-		if (!this.gameManager.ball.sprite.body.touching.none) {
+		// checking if ball collides with something, if so we play a sound
+		if (!this.gm.ball.sprite.body.touching.none) {
 			this.soundManager.play_sound(SoundClip.ballHit);
 		}
-		if (!this.gameManager.bottomBorder.body.touching.none) {
-			this.gameManager.set_lives(this.gameManager.lives - 1);
+		
+		// checking if ball collides with bottom
+		if (!this.gm.bottomBorder.body.touching.none) {
+			this.gm.set_lives(this.gm.lives - 1);
 			this.soundManager.play_sound(SoundClip.loseLife);
-			this.gameManager.reset_ball();
+			this.gm.reset_ball();
 		}
-		for (let i = 0; i < this.gameManager.brickList.length; i++) {
-			if (this.gameManager.brickList[i] == null) {
+
+		// checking if ball collides with a brick
+		for (let i = 0; i < this.gm.brickList.length; i++) {
+			if (this.gm.brickList[i] == null) {
 				continue;
 			}
-			if (!this.gameManager.brickList[i].sprite.body.touching.none) {
+			if (!this.gm.brickList[i].sprite.body.touching.none) {
 				this.soundManager.play_sound(SoundClip.damage);
-				this.gameManager.set_score(this.gameManager.score + this.gameManager.brickList[i].score);
-				this.gameManager.brickList[i].sprite.destroy();
-				this.gameManager.brickList[i] = null;
+				this.gm.set_score(this.gm.score + this.gm.brickList[i].score);
+				this.gm.brickList[i].sprite.destroy();
+				this.gm.brickList[i] = null;
 			}
 		}
+
 		// will make the ball move based on the player's momentum, so if you're moving left the ball will always go left and vice versa
-		if (!this.gameManager.playerPaddle.sprite.body.touching.none) {
+		if (!this.gm.playerPaddle.sprite.body.touching.none) {
 			if (!this.cursors.left.isDown || !this.cursors.right.isDown) {
 				if (this.cursors.left.isDown) {
-					this.gameManager.ball.sprite.body.setVelocity(-this.gameManager.ball.speed, -this.gameManager.ball.speed);
+					this.gm.ball.sprite.body.setVelocity(-this.gm.ball.speed, -this.gm.ball.speed);
 				}
 				if (this.cursors.right.isDown) {
-					this.gameManager.ball.sprite.body.setVelocity(this.gameManager.ball.speed, -this.gameManager.ball.speed);
+					this.gm.ball.sprite.body.setVelocity(this.gm.ball.speed, -this.gm.ball.speed);
 				}
 			}
 		}
