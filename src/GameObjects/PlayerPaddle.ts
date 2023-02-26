@@ -7,14 +7,14 @@ export class PlayerPaddle extends Phaser.GameObjects.GameObject {
     
     constructor(scene: Phaser.Scene, playerSprite: Phaser.GameObjects.Image) {
         super(scene, 'player');
-        this.speed = 480; // todo brian needs to be const
+        this.speed = GeneralConsts.BASE_PLAYER_SPEED;
         this.sprite = playerSprite;
         this.sprite.displayWidth = 76;
         this.sprite.displayHeight = 22;
     }
   
     player_update(time: number, delta: number, cursors: any) {
-        let speedDelta = this.speed * delta / 1000;
+        let speedDelta = this.speed * delta;
         if (cursors.left.isDown) {
             this.sprite.x -= speedDelta;
             if (this.sprite.x < 0) {

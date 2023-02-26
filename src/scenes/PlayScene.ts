@@ -14,6 +14,10 @@ class GameScene extends Phaser.Scene {
 	loseLife: Phaser.Sound.BaseSound;
 	damageSound: Phaser.Sound.BaseSound;
 	brickList: Array<Brick>;
+	score: number;
+	lives: number;
+	livesText: Phaser.GameObjects.Text;
+	scoreText: Phaser.GameObjects.Text;
 
 	constructor() {
     super({
@@ -39,6 +43,8 @@ class GameScene extends Phaser.Scene {
 	create() {
 		let centerX: number = GeneralConsts.SCREEN_WIDTH / 2;
 		let centerY: number = GeneralConsts.SCREEN_HEIGHT / 2;
+		this.score = 0;
+		this.lives = 3;
 		this.ballHit = this.sound.add('ballHit');
 		this.damageSound = this.sound.add('damage');
 		this.loseLife = this.sound.add('loseLife');
@@ -48,6 +54,8 @@ class GameScene extends Phaser.Scene {
 		});
 		music.play();
 		
+		this.livesText = this.add.text(30, GeneralConsts.SCREEN_HEIGHT - 50, "Lives: 3", { fontFamily: 'Arial', fontSize: 32, color: '#ffffff' });
+		this.scoreText = this.add.text(250, GeneralConsts.SCREEN_HEIGHT - 50, "Score: 0", { fontFamily: 'Arial', fontSize: 32, color: '#ffffff' });
 		
 		this.cursors = this.input.keyboard.createCursorKeys();
 		
@@ -59,6 +67,8 @@ class GameScene extends Phaser.Scene {
 		this.bottomBorder.displayWidth = GeneralConsts.SCREEN_WIDTH;
 		this.bottomBorder.displayHeight = 4;
 		this.playerPaddle = new PlayerPaddle(this, playerSprite);
+		
+		// initially I had the ball detect when it hits something and manually change direction, but then I found this method which is far more simple
 		this.ballSprite = this.physics.add.image(centerX, centerY, 'ball')
 			.setVelocity(BallConsts.DEFAULT_BALL_SPEED, BallConsts.DEFAULT_BALL_SPEED)
 			.setBounce(1, 1)
@@ -68,6 +78,7 @@ class GameScene extends Phaser.Scene {
 
 		this.brickList = [];
 		for (let i = 0; i < 10; i++) {
+			// reason I'm using a list of images instead of a group is because I wasn't sure how to scale the items in a group
 			let brickSprite = this.physics.add.image(100 + i * 70, 200, 'bush')
 				.setImmovable(true);
 			this.brickList.push(new Brick(this, brickSprite));
@@ -89,6 +100,7 @@ class GameScene extends Phaser.Scene {
 			this.ballHit.play();
 		}
 		if (!this.bottomBorder.body.touching.none) {
+			this.add_lives(-1);
 			this.loseLife.play();
 		}
 		for (let i = 0; i < this.brickList.length; i++) {
@@ -99,8 +111,18 @@ class GameScene extends Phaser.Scene {
 				this.damageSound.play();
 				this.brickList[i].sprite.destroy();
 				this.brickList[i] = null;
+				this.add_score(1);
 			}
 		}
+	}
+	
+	add_score(value: number) {
+		this.score += value;
+		this.scoreText.setText("Score: " + this.score);
+	}
+	add_lives(value: number) {
+		this.lives += value;
+		this.livesText.setText("Lives: " + this.lives);
 	}
 }
 
