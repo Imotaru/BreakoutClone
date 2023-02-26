@@ -15,5 +15,7 @@
 		"src/GameObjects/PlayerPaddle.ts",
 		"src/GameObjects/Ball.ts",
 		"src/GameObjects/Brick.ts",
+		"src/GameManager.ts",
+		"src/SoundManager.ts",
 	]
 }

@@ -5,10 +5,12 @@ export class PlayerPaddle extends Phaser.GameObjects.GameObject {
     private speed: number;
     public sprite: Phaser.GameObjects.Image;
     
-    constructor(scene: Phaser.Scene, playerSprite: Phaser.GameObjects.Image) {
+    constructor(scene: Phaser.Scene) {
         super(scene, 'player');
+        this.sprite = scene.physics.add.image(GeneralConsts.SCREEN_WIDTH / 2, GeneralConsts.SCREEN_HEIGHT - 140, 'player')
+            .setImmovable(true)
+            .setCollideWorldBounds(true);
         this.speed = GeneralConsts.BASE_PLAYER_SPEED;
-        this.sprite = playerSprite;
         this.sprite.displayWidth = 76;
         this.sprite.displayHeight = 22;
     }
