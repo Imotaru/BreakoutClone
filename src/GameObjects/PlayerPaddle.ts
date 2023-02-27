@@ -1,8 +1,10 @@
 ﻿import 'phaser';
 import {GeneralConsts} from "../GeneralConsts";
+import {PlayerConsts} from "../PlayerConsts";
 
 export class PlayerPaddle extends Phaser.GameObjects.GameObject {
     private speed: number;
+    private size: number;
     public sprite: Phaser.GameObjects.Image;
     
     constructor(scene: Phaser.Scene) {
@@ -11,7 +13,8 @@ export class PlayerPaddle extends Phaser.GameObjects.GameObject {
             .setImmovable(true)
             .setCollideWorldBounds(true);
         this.speed = GeneralConsts.BASE_PLAYER_SPEED;
-        this.sprite.displayWidth = 76;
+        this.size = PlayerConsts.DEFAULT_PADDLE_WIDTH;
+        this.sprite.displayWidth = this.size;
         this.sprite.displayHeight = 22;
     }
   
@@ -29,5 +32,13 @@ export class PlayerPaddle extends Phaser.GameObjects.GameObject {
                 this.sprite.x = GeneralConsts.SCREEN_WIDTH;
             }
         }
+    }
+    
+    modify_width(value: number) {
+        this.size += value;
+        if (this.size < PlayerConsts.MINIMUM_PADDLE_WIDTH) {
+            this.size = PlayerConsts.MINIMUM_PADDLE_WIDTH;
+        }
+        this.sprite.displayWidth = this.size;
     }
 }

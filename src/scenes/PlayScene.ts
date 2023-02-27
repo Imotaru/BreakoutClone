@@ -2,12 +2,8 @@ import {GameManager} from "../GameManager";
 import {SoundClip, SoundManager} from "../SoundManager";
 
 class GameScene extends Phaser.Scene {
-	// scripts
 	gm: GameManager;
 	soundManager: SoundManager;
-	
-	// input
-	cursors: any;
 
 	constructor() {
     super({
@@ -20,68 +16,43 @@ class GameScene extends Phaser.Scene {
 		this.load.image('ball', '/assets/sprites/ball.png');
 		this.load.image('bush', '/assets/sprites/bush.png');
 		this.load.image('whitePixel', '/assets/sprites/whitePixel.png');
+		this.load.image('wolf', '/assets/sprites/wolf.png');
 		// @ts-ignore
 		this.load.audio('ballHit', '/assets/sounds/ballHit.ogg');
 		// @ts-ignore
 		this.load.audio('loseLife', '/assets/sounds/loseLife.ogg');
 		// @ts-ignore
 		this.load.audio('damage', '/assets/sounds/damage.wav');
+		// @ts-ignore
+		this.load.audio('music1', '/assets/music/DST-ForestTheme1.mp3');
+		// @ts-ignore
+		this.load.audio('wolf1', '/assets/sounds/wolf1.ogg');
+		// @ts-ignore
+		this.load.audio('wolf2', '/assets/sounds/wolf2.ogg');
+		// @ts-ignore
+		this.load.audio('wolf3', '/assets/sounds/wolf3.ogg');
+		// @ts-ignore
+		this.load.audio('wolf4', '/assets/sounds/wolf4.ogg');
+		// @ts-ignore
+		this.load.audio('wolf5', '/assets/sounds/wolf5.ogg');
+		// @ts-ignore
+		this.load.audio('wolf6', '/assets/sounds/wolf6.ogg');
 	}
 
 	create() {
-		this.gm = new GameManager(this);
 		this.soundManager = new SoundManager(this);
-		this.cursors = this.input.keyboard.createCursorKeys();
+		this.gm = new GameManager(this, this.soundManager);
 	}
 	
 	update(time: number, delta:number) {
-		this.gm.playerPaddle.player_update(time, delta, this.cursors);
+		this.gm.playerPaddle.player_update(time, delta, this.gm.cursors);
 		
 		// if ball is resting then the up arrow make it start, else the ball just follows the paddle on the x axis
 		if (this.gm.isBallResting) {
-			if (this.cursors.up.isDown) {
-				this.gm.start_ball_moving(this.cursors);
+			if (this.gm.cursors.up.isDown) {
+				this.gm.start_ball_moving(this.gm.cursors);
 			}
 			this.gm.ball.sprite.x = this.gm.playerPaddle.sprite.x;
-			// we return because the logic below only matters if the ball is in play, so it's better for performance to return here
-			return;
-		}
-		
-		// checking if ball collides with something, if so we play a sound
-		if (!this.gm.ball.sprite.body.touching.none) {
-			this.soundManager.play_sound(SoundClip.ballHit);
-		}
-		
-		// checking if ball collides with bottom
-		if (!this.gm.bottomBorder.body.touching.none) {
-			this.gm.set_lives(this.gm.lives - 1);
-			this.soundManager.play_sound(SoundClip.loseLife);
-			this.gm.reset_ball();
-		}
-
-		// checking if ball collides with a brick
-		for (let i = 0; i < this.gm.brickList.length; i++) {
-			if (this.gm.brickList[i] == null) {
-				continue;
-			}
-			if (!this.gm.brickList[i].sprite.body.touching.none) {
-				this.soundManager.play_sound(SoundClip.damage);
-				this.gm.set_score(this.gm.score + this.gm.brickList[i].score);
-				this.gm.brickList[i].sprite.destroy();
-				this.gm.brickList[i] = null;
-			}
-		}
-
-		// will make the ball move based on the player's momentum, so if you're moving left the ball will always go left and vice versa
-		if (!this.gm.playerPaddle.sprite.body.touching.none) {
-			if (!this.cursors.left.isDown || !this.cursors.right.isDown) {
-				if (this.cursors.left.isDown) {
-					this.gm.ball.sprite.body.setVelocity(-this.gm.ball.speed, -this.gm.ball.speed);
-				}
-				if (this.cursors.right.isDown) {
-					this.gm.ball.sprite.body.setVelocity(this.gm.ball.speed, -this.gm.ball.speed);
-				}
-			}
 		}
 	}
 }

@@ -17,5 +17,6 @@
 		"src/GameObjects/Brick.ts",
 		"src/GameManager.ts",
 		"src/SoundManager.ts",
+		"src/GameObjects/Collectible/Wolf.ts",
 	]
 }
