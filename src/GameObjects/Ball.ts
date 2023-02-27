@@ -2,7 +2,7 @@
 import {BallConsts} from "../BallConsts";
 import {GeneralConsts} from "../GeneralConsts";
 import {GameManager} from "../GameManager";
-import {SoundClip} from "../SoundManager";
+import {SoundClip, SoundManager} from "../SoundManager";
 
 export class Ball extends Phaser.GameObjects.GameObject {
     public speed: number;
@@ -10,7 +10,7 @@ export class Ball extends Phaser.GameObjects.GameObject {
     
     constructor(scene: Phaser.Scene) {
         super(scene, 'ball');
-        this.sprite = scene.physics.add.image(GeneralConsts.SCREEN_WIDTH / 2, GeneralConsts.SCREEN_HEIGHT / 2, 'ball')
+        this.sprite = scene.physics.add.image(GeneralConsts.SCREEN_CENTER_X, GeneralConsts.SCREEN_CENTER_Y, 'ball')
             .setVelocity(BallConsts.DEFAULT_BALL_SPEED, BallConsts.DEFAULT_BALL_SPEED)
             .setBounce(1, 1)
             .setCollideWorldBounds(true);
@@ -20,14 +20,17 @@ export class Ball extends Phaser.GameObjects.GameObject {
 
         // @ts-ignore
         scene.physics.add.collider(GameManager.I.playerPaddle.sprite, this.sprite, () => {
-            if (!GameManager.I.cursors.left.isDown || !GameManager.I.cursors.right.isDown) {
-                if (GameManager.I.cursors.left.isDown) {
+            // if the paddle has momentum we want to move the ball in the same direction
+            // this also has the side effect that you can hit the ball sideways if you're moving and it will save you, which I think is pretty cool
+            let leftDown = GameManager.I.cursors.left.isDown;
+            let rightDown = GameManager.I.cursors.right.isDown;
+            if (!leftDown || !rightDown) {
+                if (leftDown) {
                     this.sprite.body.setVelocity(-this.speed, -this.speed);
-                }
-                if (GameManager.I.cursors.right.isDown) {
+                } else if (rightDown) {
                     this.sprite.body.setVelocity(this.speed, -this.speed);
                 }
-                GameManager.I.soundManager.play_sound(SoundClip.ballHit);
+                SoundManager.I.play_sound(SoundClip.ballHit);
             }
         });
 
@@ -35,7 +38,7 @@ export class Ball extends Phaser.GameObjects.GameObject {
         scene.physics.add.collider(GameManager.I.bottomBorder, this.sprite, () => {
             if (!GameManager.I.bottomBorder.body.touching.none) {
                 GameManager.I.set_lives(GameManager.I.lives - 1);
-                GameManager.I.soundManager.play_sound(SoundClip.loseLife);
+                SoundManager.I.play_sound(SoundClip.loseLife);
                 GameManager.I.reset_ball();
             }
         });
@@ -66,13 +69,15 @@ export class Ball extends Phaser.GameObjects.GameObject {
         this.sprite.body.setVelocity(newX, newY)
     }
     
-    start_ball_moving(cursors: any) {
-        if (!cursors.left.isDown || !cursors.right.isDown) {
-            if (cursors.left.isDown) {
+    start_ball_moving() {
+        // if the paddle has momentum we want to move the ball in the same direction
+        let leftDown = GameManager.I.cursors.left.isDown;
+        let rightDown = GameManager.I.cursors.right.isDown;
+        if (!leftDown || !rightDown) {
+            if (leftDown) {
                 this.sprite.body.setVelocity(-this.speed, -this.speed);
                 return;
-            }
-            if (cursors.right.isDown) {
+            } else if (rightDown) {
                 this.sprite.body.setVelocity(this.speed, -this.speed);
                 return;
             }

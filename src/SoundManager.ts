@@ -9,6 +9,9 @@ export enum SoundClip {
 }
 
 export class SoundManager {
+    // singleton so I can always access the SoundManager from anywhere, without needing to pass a reference
+    public static I: SoundManager;
+    
     ballHit: Phaser.Sound.BaseSound;
     loseLife: Phaser.Sound.BaseSound;
     damageSound: Phaser.Sound.BaseSound;
@@ -18,6 +21,7 @@ export class SoundManager {
     music1: Phaser.Sound.BaseSound;
     
     constructor(scene: Phaser.Scene) {
+        SoundManager.I = this;
         this.ballHit = scene.sound.add('ballHit');
         this.damageSound = scene.sound.add('damage');
         this.loseLife = scene.sound.add('loseLife');

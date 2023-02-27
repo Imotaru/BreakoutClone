@@ -1,7 +1,6 @@
 ﻿import 'phaser';
 import {GameManager} from "../GameManager";
-import {SoundClip} from "../SoundManager";
-import {Wolf} from "./Collectible/Wolf";
+import {SoundClip, SoundManager} from "../SoundManager";
 import {BallConsts} from "../BallConsts";
 
 export class Brick extends Phaser.GameObjects.GameObject {
@@ -9,9 +8,9 @@ export class Brick extends Phaser.GameObjects.GameObject {
     public score: number;
     private callback: Function;
 
-    constructor(gm: GameManager, x: number, y: number, score: number, callback: Function) {
+    constructor(gm: GameManager, x: number, y: number, score: number, sprite_name: string, callback: Function) {
         super(gm.scene, 'brick');
-        this.sprite = gm.scene.physics.add.image(x, y, 'bush')
+        this.sprite = gm.scene.physics.add.image(x, y, sprite_name)
             .setImmovable(true);
         this.sprite.displayWidth = 60;
         this.sprite.displayHeight = 30;
@@ -20,7 +19,7 @@ export class Brick extends Phaser.GameObjects.GameObject {
         
         // @ts-ignore
         gm.scene.physics.add.collider(gm.ball.sprite, this.sprite, () => {
-            gm.soundManager.play_sound(SoundClip.damage);
+            SoundManager.I.play_sound(SoundClip.damage);
             gm.set_score(gm.score + this.score);
             callback();
             this.sprite.destroy();
