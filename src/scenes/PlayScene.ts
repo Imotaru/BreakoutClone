@@ -37,6 +37,8 @@ class GameScene extends Phaser.Scene {
 		this.load.audio('wolf5', '/assets/sounds/wolf5.ogg');
 		// @ts-ignore
 		this.load.audio('wolf6', '/assets/sounds/wolf6.ogg');
+		// @ts-ignore
+		this.load.audio('wolfBite', '/assets/sounds/wolfBite.ogg');
 	}
 
 	create() {

@@ -2,6 +2,7 @@
 import {GameManager} from "../GameManager";
 import {SoundClip} from "../SoundManager";
 import {Wolf} from "./Collectible/Wolf";
+import {BallConsts} from "../BallConsts";
 
 export class Brick extends Phaser.GameObjects.GameObject {
     public sprite: Phaser.GameObjects.Image;
@@ -24,6 +25,7 @@ export class Brick extends Phaser.GameObjects.GameObject {
             callback();
             this.sprite.destroy();
             this.destroy();
+            gm.ball.modify_ball_speed(BallConsts.BALL_SPEED_UP[gm.currentLevel - 1]);
             gm.increment_brick_destroy_count();
         });
     }

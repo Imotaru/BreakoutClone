@@ -95,7 +95,6 @@ export class GameManager {
     
     increment_brick_destroy_count() {
         this.bricksDestroyedThisLevel++;
-        this.ball.modify_ball_speed(BallConsts.BALL_SPEED_UP[this.currentLevel - 1]);
     }
 
     set_score(value: number) {

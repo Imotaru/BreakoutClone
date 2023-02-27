@@ -5,6 +5,7 @@ export enum SoundClip {
     damage,
     loseLife,
     wolf,
+    wolfBite,
 }
 
 export class SoundManager {
@@ -12,6 +13,7 @@ export class SoundManager {
     loseLife: Phaser.Sound.BaseSound;
     damageSound: Phaser.Sound.BaseSound;
     wolfSounds: Array<Phaser.Sound.BaseSound>;
+    wolfBite: Phaser.Sound.BaseSound;
     
     music1: Phaser.Sound.BaseSound;
     
@@ -27,6 +29,7 @@ export class SoundManager {
             scene.sound.add('wolf5'),
             scene.sound.add('wolf6'),
         ]
+        this.wolfBite = scene.sound.add('wolfBite');
         this.music1 = scene.sound.add('music1', {
             loop: true,
             volume: 0.4,
@@ -46,6 +49,9 @@ export class SoundManager {
                 break;
             case SoundClip.wolf:
                 this.wolfSounds[Math.floor(Math.random() * 6)].play();
+                break;
+            case SoundClip.wolfBite:
+                this.wolfBite.play();
                 break;
         }
     }

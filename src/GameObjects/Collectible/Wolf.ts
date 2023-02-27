@@ -1,6 +1,5 @@
 ﻿import 'phaser';
 import {GameManager} from "../../GameManager";
-import Game = Phaser.Game;
 import {SoundClip} from "../../SoundManager";
 
 export class Wolf extends Phaser.GameObjects.GameObject {
@@ -17,6 +16,7 @@ export class Wolf extends Phaser.GameObjects.GameObject {
         // @ts-ignore
         GameManager.I.scene.physics.add.collider(GameManager.I.playerPaddle.sprite, this.sprite, () => {
             GameManager.I.playerPaddle.modify_width(-12);
+            GameManager.I.soundManager.play_sound(SoundClip.wolfBite);
             this.sprite.destroy();
             this.destroy();
         });
