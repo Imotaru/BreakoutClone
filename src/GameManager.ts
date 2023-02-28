@@ -4,7 +4,6 @@ import {Brick} from "./GameObjects/Brick";
 import {Ball} from "./GameObjects/Ball";
 import {PlayerPaddle} from "./GameObjects/PlayerPaddle";
 import {SoundManager} from "./SoundManager";
-import {Wolf} from "./GameObjects/Collectible/Wolf";
 import {LoseScreen} from "./GameObjects/LoseScreen";
 import {BrickConsts} from "./BrickConsts";
 
@@ -18,7 +17,9 @@ export class GameManager {
     public isBallResting: boolean;
     public isLoseScreenOpen: boolean;
     public currentLevel: number;
-    public bricksDestroyedThisLevel: number;
+    bricksDestroyedThisLevel: number;
+    bricksRequired: number;
+    totalBricks: number;
 
     // game objects and images
     bottomBorder: Phaser.GameObjects.Image;
@@ -30,6 +31,7 @@ export class GameManager {
     livesText: Phaser.GameObjects.Text;
     scoreText: Phaser.GameObjects.Text;
     levelText: Phaser.GameObjects.Text;
+    progressText: Phaser.GameObjects.Text;
     
     // other
     scene: Phaser.Scene;
@@ -42,11 +44,12 @@ export class GameManager {
         this.cursors = scene.input.keyboard.createCursorKeys();
         this.spacebar = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.isBallResting = true;
-        this.currentLevel = 1;
+        this.currentLevel = 3; // todo reset
         
-        this.livesText = scene.add.text(30, GeneralConsts.SCREEN_HEIGHT - 50, "Lives: 3", { fontFamily: 'Arial', fontSize: 32, color: '#ff0000' });
-        this.scoreText = scene.add.text(250, GeneralConsts.SCREEN_HEIGHT - 50, "Score: 0", { fontFamily: 'Arial', fontSize: 32, color: '#ffffff' });
-        this.levelText = scene.add.text(550, GeneralConsts.SCREEN_HEIGHT - 50, "Level 1", { fontFamily: 'Arial', fontSize: 32, color: '#00ff00' });
+        this.livesText = scene.add.text(30, GeneralConsts.SCREEN_HEIGHT - 50, "", { fontFamily: 'Arial', fontSize: 32, color: '#ff0000' });
+        this.scoreText = scene.add.text(200, GeneralConsts.SCREEN_HEIGHT - 50, "", { fontFamily: 'Arial', fontSize: 32, color: '#ffffff' });
+        this.levelText = scene.add.text(430, GeneralConsts.SCREEN_HEIGHT - 50, "", { fontFamily: 'Arial', fontSize: 32, color: '#00ff00' });
+        this.progressText = scene.add.text(660, GeneralConsts.SCREEN_HEIGHT - 50, "", { fontFamily: 'Arial', fontSize: 32, color: '#ffffff' });
         this.set_score(0);
 
         this.bottomBorder = scene.physics.add.image(GeneralConsts.SCREEN_WIDTH, GeneralConsts.SCREEN_HEIGHT - 80, 'whitePixel')
@@ -77,8 +80,8 @@ export class GameManager {
         }
         
         this.currentLevel = level;
-        this.levelText.setText("Level: " + level)
-        
+        this.levelText.setText(`Level: ${level}`);
+
         if (this.brickList != null) {
             for (let i = 0; i < this.brickList.length; i++) {
                 if (this.brickList[i] != null) {
@@ -91,7 +94,9 @@ export class GameManager {
         
         SoundManager.I.play_music(level);
         this.set_lives(3);
-        this.bricksDestroyedThisLevel = 0;
+        this.totalBricks = BrickConsts.ROW_AMOUNTS[this.currentLevel - 1] * BrickConsts.COLUMN_AMOUNT;
+        this.bricksRequired = this.totalBricks * BrickConsts.BRICK_PERCENTAGE_REQUIRED;
+        this.set_brick_destroy_count(0);
         this.ball.reset_ball_speed();
         this.playerPaddle.reset_width();
         this.reset_ball();
@@ -116,17 +121,27 @@ export class GameManager {
     }
     
     increment_brick_destroy_count() {
-        this.bricksDestroyedThisLevel++;
+        this.set_brick_destroy_count(this.bricksDestroyedThisLevel + 1);
+    }
+    
+    set_brick_destroy_count(value: number) {
+        this.bricksDestroyedThisLevel = value;
+        if (this.bricksDestroyedThisLevel >= this.bricksRequired) {
+            if (this.currentLevel < GeneralConsts.MAX_LEVEL) {
+                this.load_level(this.currentLevel + 1);
+            }
+        }
+        this.progressText.setText(`Progress: ${Math.floor(100 * this.bricksDestroyedThisLevel / this.totalBricks)}% / ${Math.floor(BrickConsts.BRICK_PERCENTAGE_REQUIRED * 100)}%`)
     }
 
     set_score(value: number) {
         this.score = value;
-        this.scoreText.setText("Score: " + this.score);
+        this.scoreText.setText(`Score: ${this.score}`);
     }
     set_lives(value: number) {
         this.lives = value;
-        this.livesText.setText("Lives: " + this.lives);
-        if (this.lives <= 2) {
+        this.livesText.setText(`Lives: ${this.lives}`);
+        if (this.lives <= 0) {
             this.show_lose_screen();
         }
     }

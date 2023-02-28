@@ -20,15 +20,17 @@ export class Ball extends Phaser.GameObjects.GameObject {
 
         // @ts-ignore
         scene.physics.add.collider(GameManager.I.playerPaddle.sprite, this.sprite, () => {
-            // if the paddle has momentum we want to move the ball in the same direction
-            // this also has the side effect that you can hit the ball sideways if you're moving and it will save you, which I think is pretty cool
-            let leftDown = GameManager.I.cursors.left.isDown;
-            let rightDown = GameManager.I.cursors.right.isDown;
-            if (!leftDown || !rightDown) {
-                if (leftDown) {
-                    this.sprite.body.setVelocity(-this.speed, -this.speed);
-                } else if (rightDown) {
-                    this.sprite.body.setVelocity(this.speed, -this.speed);
+            // comparing the y values to make sure the ball is hitting the top of the paddle and not the side
+            if (this.sprite.y <= GameManager.I.playerPaddle.sprite.y) {
+                // if the paddle has momentum we want to move the ball in the same direction
+                let leftDown = GameManager.I.cursors.left.isDown;
+                let rightDown = GameManager.I.cursors.right.isDown;
+                if (!leftDown || !rightDown) {
+                    if (leftDown) {
+                        this.sprite.body.setVelocity(-this.speed, -this.speed);
+                    } else if (rightDown) {
+                        this.sprite.body.setVelocity(this.speed, -this.speed);
+                    }
                 }
                 SoundManager.I.play_sound(SoundClip.ballHit);
             }

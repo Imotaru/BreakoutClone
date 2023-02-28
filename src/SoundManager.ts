@@ -6,19 +6,23 @@ export enum SoundClip {
     loseLife,
     wolf,
     wolfBite,
+    boneSpear,
+    boneSpearHit,
 }
 
 export class SoundManager {
     // singleton so I can always access the SoundManager from anywhere, without needing to pass a reference
     public static I: SoundManager;
+    currentlyPlayingMusic: Phaser.Sound.BaseSound;
     
     ballHit: Phaser.Sound.BaseSound;
     loseLife: Phaser.Sound.BaseSound;
     damageSound: Phaser.Sound.BaseSound;
     wolfSounds: Array<Phaser.Sound.BaseSound>;
+    boneSpear: Array<Phaser.Sound.BaseSound>;
     wolfBite: Phaser.Sound.BaseSound;
-    
-    music1: Phaser.Sound.BaseSound;
+    boneSpearHit: Phaser.Sound.BaseSound;
+    music: Array<Phaser.Sound.BaseSound>;
     
     constructor(scene: Phaser.Scene) {
         SoundManager.I = this;
@@ -34,10 +38,27 @@ export class SoundManager {
             scene.sound.add('wolf6'),
         ]
         this.wolfBite = scene.sound.add('wolfBite');
-        this.music1 = scene.sound.add('music1', {
-            loop: true,
-            volume: 0.4,
-        });
+        this.boneSpear = [
+            scene.sound.add('bonespear1'),
+            scene.sound.add('bonespear2'),
+            scene.sound.add('bonespear3'),
+        ]
+        this.boneSpearHit = scene.sound.add('bonespearhit');
+        this.music = [
+            scene.sound.add('music1', {
+                loop: true,
+                volume: 0.4,
+            }),
+            scene.sound.add('music2', {
+                loop: true,
+                volume: 0.4,
+            }),
+            scene.sound.add('music3', {
+                loop: true,
+                volume: 0.4,
+            }),
+        ];
+
     }
     
     play_sound(soundClip: SoundClip) {
@@ -52,18 +73,25 @@ export class SoundManager {
                 this.loseLife.play();
                 break;
             case SoundClip.wolf:
-                this.wolfSounds[Math.floor(Math.random() * 6)].play();
+                this.wolfSounds[Math.floor(Math.random() * this.wolfSounds.length)].play();
                 break;
             case SoundClip.wolfBite:
                 this.wolfBite.play();
+                break;
+            case SoundClip.boneSpear:
+                this.boneSpear[Math.floor(Math.random() * this.boneSpear.length)].play();
+                break;
+            case SoundClip.boneSpearHit:
+                this.boneSpearHit.play();
                 break;
         }
     }
     
     play_music(level: number) {
-        switch (level) {
-            case 1:
-                this.music1.play();
+        if (this.currentlyPlayingMusic != null) {
+            this.currentlyPlayingMusic.stop();
         }
+        this.currentlyPlayingMusic = this.music[level - 1];
+        this.currentlyPlayingMusic.play();
     }
 }
