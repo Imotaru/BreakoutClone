@@ -73,6 +73,8 @@ class GameScene extends Phaser.Scene {
 		this.load.audio('lightningBoltImpact', '/assets/sounds/LightningBoltImpact.ogg');
 		// @ts-ignore
 		this.load.audio('ballSpeedUp', '/assets/sounds/ballSpeedUp.wav');
+		// @ts-ignore
+		this.load.audio('levelComplete', '/assets/sounds/LevelComplete.ogg');
 	}
 
 	create() {

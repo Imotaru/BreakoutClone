@@ -3,7 +3,7 @@ import {GeneralConsts} from "./GeneralConsts";
 import {Brick} from "./GameObjects/Brick";
 import {Ball} from "./GameObjects/Ball";
 import {PlayerPaddle} from "./GameObjects/PlayerPaddle";
-import {SoundManager} from "./SoundManager";
+import {SoundClip, SoundManager} from "./SoundManager";
 import {LoseScreen} from "./GameObjects/LoseScreen";
 import {BrickConsts} from "./BrickConsts";
 import {Collectible} from "./GameObjects/Collectible/Collectible";
@@ -141,6 +141,7 @@ export class GameManager {
             if (this.currentLevel < GeneralConsts.MAX_LEVEL) {
                 this.load_level(this.currentLevel + 1);
             }
+            SoundManager.I.play_sound(SoundClip.levelComplete);
         }
         this.progressText.setText(
             `Progress: ${Math.floor(100 * this.bricksDestroyedThisLevel / this.totalBricks)}% / ${Math.floor(100 * BrickConsts.BRICK_PERCENTAGE_REQUIRED)}%`)

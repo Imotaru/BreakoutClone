@@ -13,6 +13,7 @@ export enum SoundClip {
     lightning,
     lightningBoltImpact,
     ballSpeedUp,
+    levelComplete,
 }
 
 export class SoundManager {
@@ -59,6 +60,9 @@ export class SoundManager {
             ],
             [SoundClip.ballSpeedUp]: [
                 scene.sound.add('ballSpeedUp')
+            ],
+            [SoundClip.levelComplete]: [
+                scene.sound.add('levelComplete')
             ],
         };
 
