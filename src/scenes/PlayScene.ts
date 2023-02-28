@@ -70,8 +70,9 @@ class GameScene extends Phaser.Scene {
 	
 	update(time: number, delta:number) {
 		if (GameManager.I.isLoseScreenOpen) {
-			// I'm using this JustDown method because the justDown property of the key didn't work for some reason,
-			// and I only want to trigger it once and not every frame
+			/* I'm using this JustDown method because the justDown property of the key didn't work for some reason,
+			 * and I only want to trigger it once and not every frame
+			 */
 			if (Phaser.Input.Keyboard.JustDown(GameManager.I.cursors.up)) {
 				LoseScreen.I.selection_up();
 				SoundManager.I.play_sound(SoundClip.ballHit);

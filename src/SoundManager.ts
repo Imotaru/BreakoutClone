@@ -16,6 +16,10 @@ export class SoundManager {
     // singleton so I can always access the SoundManager from anywhere, without needing to pass a reference
     public static I: SoundManager;
     currentlyPlayingMusic: Phaser.Sound.BaseSound;
+    
+    /* Reason to have enum as a key: less error prone than strings because you don't need to worry about typos + you have auto complete
+    *  Reason to have an array as value: can have certain sounds have a pool to choose a random sound from for more diversity
+    * */
     sounds: Record<SoundClip, Array<Phaser.Sound.BaseSound>>;
     music: Array<Phaser.Sound.BaseSound>;
     
