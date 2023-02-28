@@ -34,6 +34,7 @@ export class GameManager {
     scoreText: Phaser.GameObjects.Text;
     levelText: Phaser.GameObjects.Text;
     progressText: Phaser.GameObjects.Text;
+    hintText: Phaser.GameObjects.Text;
     
     // other
     scene: Phaser.Scene;
@@ -55,6 +56,7 @@ export class GameManager {
         this.scoreText = scene.add.text(200, textY, "", { fontFamily: 'Arial', fontSize: textFontSize, color: '#ffffff' });
         this.levelText = scene.add.text(430, textY, "", { fontFamily: 'Arial', fontSize: textFontSize, color: '#00ff00' });
         this.progressText = scene.add.text(660, textY, "", { fontFamily: 'Arial', fontSize: textFontSize, color: '#ffffff' });
+        this.hintText = scene.add.text(250, GeneralConsts.SCREEN_CENTER_Y + 100, "", { fontFamily: 'Arial', fontSize: 20, color: '#ffffff' });
         
         this.set_score(0);
 
@@ -72,6 +74,7 @@ export class GameManager {
     start_ball_moving() {
         this.isBallResting = false;
         this.ball.start_ball_moving();
+        GameManager.I.set_hint_text_active(false);
     }
     
     load_level(level: number) {
@@ -107,6 +110,7 @@ export class GameManager {
         this.ball.reset_ball_speed();
         this.playerPaddle.reset_paddle();
         this.ball.rest_ball();
+        this.update_hint_text();
     }
     
     spawn_bricks() {
@@ -155,6 +159,15 @@ export class GameManager {
         if (this.lives <= 0) {
             this.show_lose_screen();
         }
+    }
+    
+    set_hint_text_active(value: boolean) {
+        this.hintText.visible = value;
+    }
+    
+    update_hint_text() {
+        this.hintText.setText(GeneralConsts.CONTROL_HINT + "\n" + GeneralConsts.LEVEL_HINT[this.currentLevel - 1]);
+        this.set_hint_text_active(true);
     }
     
     private show_lose_screen() {

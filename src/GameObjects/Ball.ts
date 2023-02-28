@@ -46,6 +46,7 @@ export class Ball extends Phaser.GameObjects.GameObject {
                 GameManager.I.set_lives(GameManager.I.lives - 1);
                 SoundManager.I.play_sound(SoundClip.loseLife);
                 this.rest_ball();
+                GameManager.I.set_hint_text_active(true);
             }
         });
     }
