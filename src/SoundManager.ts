@@ -10,6 +10,8 @@ export enum SoundClip {
     boneSpearHit,
     stickDrop,
     stickCollect,
+    lightning,
+    lightningBoltImpact,
 }
 
 export class SoundManager {
@@ -46,6 +48,14 @@ export class SoundManager {
             [SoundClip.boneSpearHit]: [scene.sound.add('bonespearhit')],
             [SoundClip.stickDrop]: [scene.sound.add('stickDrop')],
             [SoundClip.stickCollect]: [scene.sound.add('stickCollect')],
+            [SoundClip.lightning]: [
+                scene.sound.add('lightning1'),
+                scene.sound.add('lightning2'),
+                scene.sound.add('lightning3'),
+            ],
+            [SoundClip.lightningBoltImpact]: [
+                scene.sound.add('lightningBoltImpact')
+            ],
         };
 
         this.music = [

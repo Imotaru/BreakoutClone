@@ -13,9 +13,12 @@ export class BrickConsts {
             }
         },
         (x: number, y: number) => {
+            if (Math.random() < 0.5) {
+                new Collectible(CollectibleType.Lightning, x, y);
+            }
         },
         (x: number, y: number) => {
-            if (Math.random() < 0.3 + 1) {
+            if (Math.random() < 0.3) {
                 new Collectible(CollectibleType.BoneSpear, x, y);
             }
         },

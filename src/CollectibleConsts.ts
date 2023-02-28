@@ -5,6 +5,7 @@ import {GameManager} from "./GameManager";
 export enum CollectibleType {
     Wolf,
     Stick,
+    Lightning,
     BoneSpear,
 }
 
@@ -44,10 +45,23 @@ export class CollectibleConsts {
             () => {
                 return 80 + Math.random() * 40;
             }),
-        [CollectibleType.BoneSpear]: new CollectibleData('boneSpear', 8, 80, SoundClip.boneSpear, SoundClip.boneSpearHit,
+        [CollectibleType.Lightning]: new CollectibleData('lightning', 25, 50, SoundClip.lightning, SoundClip.lightningBoltImpact,
             // onCollect
             () => {
-                GameManager.I.playerPaddle.modify_width(-12);
+                GameManager.I.playerPaddle.add_stun_duration(600);
+            },
+            // xSpeedGetter
+            () => {
+                return 0;
+            },
+            // ySpeedGetter
+            () => {
+                return 450 + Math.random() * 100;
+            }),
+        [CollectibleType.BoneSpear]: new CollectibleData('boneSpear', 8, 60, SoundClip.boneSpear, SoundClip.boneSpearHit,
+            // onCollect
+            () => {
+                GameManager.I.playerPaddle.modify_width(-15);
                 GameManager.I.modify_score(-3);
             },
             // xSpeedGetter

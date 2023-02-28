@@ -8,6 +8,8 @@ export class PlayerPaddle extends Phaser.GameObjects.GameObject {
     private width: number;
     public image: Phaser.GameObjects.Image;
     
+    private stunDurationLeft: number; // time in ms
+    
     constructor(scene: Phaser.Scene) {
         super(scene, 'player');
         this.image = scene.physics.add.image(GeneralConsts.SCREEN_CENTER_X, GeneralConsts.SCREEN_HEIGHT - 140, 'player')
@@ -17,9 +19,14 @@ export class PlayerPaddle extends Phaser.GameObjects.GameObject {
         this.width = PlayerConsts.DEFAULT_PADDLE_WIDTH;
         this.image.displayWidth = this.width;
         this.image.displayHeight = 22;
+        this.stunDurationLeft = 0;
     }
   
-    player_update() {
+    player_update(delta: number) {
+        if (this.stunDurationLeft > 0) {
+            this.stunDurationLeft = Math.max(this.stunDurationLeft - delta, 0);
+            return;
+        }
         if ((GameManager.I.cursors.left.isDown && GameManager.I.cursors.right.isDown) ||
             (GameManager.I.cursors.left.isUp && GameManager.I.cursors.right.isUp)) {
             this.image.body.setVelocity(0, 0);
@@ -36,5 +43,10 @@ export class PlayerPaddle extends Phaser.GameObjects.GameObject {
     reset_width() {
         this.width = PlayerConsts.DEFAULT_PADDLE_WIDTH;
         this.image.displayWidth = this.width;
+    }
+    
+    add_stun_duration(value: number) {
+        this.stunDurationLeft += value;
+        this.image.body.setVelocity(0, 0);
     }
 }
