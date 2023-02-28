@@ -65,7 +65,6 @@ export class Ball extends Phaser.GameObjects.GameObject {
     }
     
     modify_ball_speed(value: number) {
-        // todo this needs to be inverted for negative values
         this.speed += value;
         let newX;
         if (this.image.body.velocity.x > 0) {
