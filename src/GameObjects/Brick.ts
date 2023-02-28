@@ -28,8 +28,4 @@ export class Brick extends Phaser.GameObjects.GameObject {
             gm.increment_brick_destroy_count();
         });
     }
-    
-    destroy() {
-        
-    }
 }
