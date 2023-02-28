@@ -144,7 +144,10 @@ export class GameManager {
         this.progressText.setText(`Progress: ${Math.floor(100 * this.bricksDestroyedThisLevel / this.totalBricks)}% / ${Math.floor(BrickConsts.BRICK_PERCENTAGE_REQUIRED * 100)}%`)
     }
 
-    set_score(value: number) {
+    modify_score(value: number) {
+        this.set_score(this.score + value);
+    }
+    private set_score(value: number) {
         this.score = value;
         this.scoreText.setText(`Score: ${this.score}`);
     }

@@ -20,7 +20,7 @@ export class Brick extends Phaser.GameObjects.GameObject {
         // @ts-ignore
         gm.scene.physics.add.collider(gm.ball.image, this.image, () => {
             SoundManager.I.play_sound(SoundClip.damage);
-            gm.set_score(gm.score + this.score);
+            gm.modify_score(this.score);
             callback();
             this.image.destroy();
             this.destroy();

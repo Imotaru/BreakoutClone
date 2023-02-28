@@ -1,6 +1,5 @@
-﻿import {Wolf} from "./GameObjects/Collectible/Wolf";
-import {BoneSpear} from "./GameObjects/Collectible/BoneSpear";
-import {Stick} from "./GameObjects/Collectible/Stick";
+﻿import {Collectible} from "./GameObjects/Collectible/Collectible";
+import {CollectibleType} from "./CollectibleConsts";
 
 export class BrickConsts {
     static BRICK_SPRITES: Array<string> = ['bush', 'cloud', 'bonePile']
@@ -8,16 +7,16 @@ export class BrickConsts {
     static BRICK_DESTRUCTION_CALLBACKS: Array<Function> = [
         (x: number, y: number) => {
             if (Math.random() < 0.3) {
-                new Wolf(x, y);
+                new Collectible(CollectibleType.Wolf, x, y);
             } else if (Math.random() < 0.15) {
-                new Stick(x, y);
+                new Collectible(CollectibleType.Stick, x, y);
             }
         },
         (x: number, y: number) => {
         },
         (x: number, y: number) => {
             if (Math.random() < 0.3 + 1) {
-                new BoneSpear(x, y);
+                new Collectible(CollectibleType.BoneSpear, x, y);
             }
         },
     ]
