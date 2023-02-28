@@ -22,6 +22,9 @@ export class Brick extends Phaser.GameObjects.GameObject {
             SoundManager.I.play_sound(SoundClip.damage);
             gm.modify_score(this.score);
             callback();
+            /* if this was a bigger project we would pool these objects and just hide them
+            * instead of destroying and recreating them for better performance
+            */
             this.image.destroy();
             this.destroy();
             gm.ball.modify_ball_speed(BallConsts.BALL_SPEED_UP[gm.currentLevel - 1]);

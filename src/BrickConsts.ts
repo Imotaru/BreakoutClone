@@ -1,4 +1,4 @@
-﻿import {Collectible} from "./GameObjects/Collectible/Collectible";
+﻿import {Collectible} from "./GameObjects/Collectible";
 import {CollectibleType} from "./CollectibleConsts";
 import {GameManager} from "./GameManager";
 

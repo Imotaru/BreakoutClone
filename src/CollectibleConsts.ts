@@ -1,6 +1,7 @@
 ﻿import {CollectibleData} from "./CollectibleData";
 import {SoundClip} from "./SoundManager";
 import {GameManager} from "./GameManager";
+import {Helper} from "./Helper";
 
 export enum CollectibleType {
     Wolf,
@@ -24,11 +25,11 @@ export class CollectibleConsts {
                 GameManager.I.modify_score(-2);
             },
             // xSpeedGetter
-            (x: number, y: number) => {
+            (_: number, __: number) => {
                 return -30 + Math.random() * 60;
             },
             // ySpeedGetter
-            (x: number, y: number) => {
+            (_: number, __: number) => {
                 return 180 + Math.random() * 40;
             }),
         [CollectibleType.Stick]: new CollectibleData('stick', 50, 25, SoundClip.stickDrop, SoundClip.stickCollect,
@@ -38,11 +39,11 @@ export class CollectibleConsts {
                 GameManager.I.modify_score(1);
             },
             // xSpeedGetter
-            (x: number, y: number) => {
+            (_: number, __: number) => {
                 return 0;
             },
             // ySpeedGetter
-            (x: number, y: number) => {
+            (_: number, __: number) => {
                 return 80 + Math.random() * 40;
             }),
         [CollectibleType.Lightning]: new CollectibleData('lightning', 25, 50, SoundClip.lightning, SoundClip.lightningBoltImpact,
@@ -51,11 +52,11 @@ export class CollectibleConsts {
                 GameManager.I.playerPaddle.add_stun_duration(600);
             },
             // xSpeedGetter
-            (x: number, y: number) => {
+            (_: number, __: number) => {
                 return 0;
             },
             // ySpeedGetter
-            (x: number, y: number) => {
+            (_: number, __: number) => {
                 return 450 + Math.random() * 100;
             }),
         [CollectibleType.BoneSpear]: new CollectibleData('boneSpear', 8, 60, SoundClip.boneSpear, SoundClip.boneSpearHit,
@@ -72,17 +73,17 @@ export class CollectibleConsts {
             * but the direction is still the same.
             * */
             // xSpeedGetter
-            (x: number, y: number) => {
-                let xDiff = (GameManager.I.playerPaddle.image.x - x);
-                let yDiff = (GameManager.I.playerPaddle.image.y - y);
-                let magnitude = Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2))
+            (xPos: number, yPos: number) => {
+                let xDiff = (GameManager.I.playerPaddle.image.x - xPos);
+                let yDiff = (GameManager.I.playerPaddle.image.y - yPos);
+                let magnitude = Helper.get_vector_magnitude(xDiff, yDiff);
                 return (xDiff / magnitude) * (220 + 60 * Math.random());
             },
             // ySpeedGetter
-            (x: number, y: number) => {
-                let xDiff = (GameManager.I.playerPaddle.image.x - x);
-                let yDiff = (GameManager.I.playerPaddle.image.y - y);
-                let magnitude = Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2))
+            (xPos: number, yPos: number) => {
+                let xDiff = (GameManager.I.playerPaddle.image.x - xPos);
+                let yDiff = (GameManager.I.playerPaddle.image.y - yPos);
+                let magnitude = Helper.get_vector_magnitude(xDiff, yDiff);
                 return (yDiff / magnitude) * (220 + 60 * Math.random());
             }),
     };

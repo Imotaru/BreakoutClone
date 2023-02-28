@@ -100,15 +100,19 @@ class GameScene extends Phaser.Scene {
 			return;
 		}
 		
+		/* I tried having the update function in the GameObjects themselves, but that doesn't seem to work.
+		* Having every update function in here is not ideal, but since this project is quite small it's not a big deal.
+		*/	
 		GameManager.I.playerPaddle.player_update(delta);
 		GameManager.I.ball.update_ball(delta);
 		
-		// if ball is resting then the up arrow make it start, else the ball just follows the paddle on the x axis
+		// if ball is resting then the up arrow make it start, until then the ball just follows the paddle on the x axis
 		if (GameManager.I.isBallResting) {
 			if (GameManager.I.cursors.up.isDown) {
-				GameManager.I.start_ball_moving();
+				GameManager.I.ball.start_ball_moving();
+			} else {
+				GameManager.I.ball.image.x = GameManager.I.playerPaddle.image.x;
 			}
-			GameManager.I.ball.image.x = GameManager.I.playerPaddle.image.x;
 		}
 	}
 }

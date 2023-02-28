@@ -19,6 +19,6 @@
 		"src/GameObjects/LoseScreen.ts",
 		"src/GameManager.ts",
 		"src/SoundManager.ts",
-		"src/GameObjects/Collectible/Collectible.ts",
+		"src/GameObjects/Collectible.ts",
 	]
 }

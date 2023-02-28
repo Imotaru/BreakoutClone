@@ -75,6 +75,9 @@ export class LoseScreen extends Phaser.GameObjects.GameObject {
         }
         
         GameManager.I.set_score(0);
+        /* there must be some better way to destroy the whole menu rather than destroying each object individually
+         * also you would probably just toggle the visibility instead of destroying it, but I'm not gonna do that for this small project
+         */
         this.panel.destroy();
         this.selector.destroy();
         this.option1.destroy();

@@ -1,8 +1,8 @@
 ﻿import 'phaser';
-import {GameManager} from "../../GameManager";
-import {Helper} from "../../Helper";
-import {CollectibleConsts, CollectibleType} from "../../CollectibleConsts";
-import {SoundManager} from "../../SoundManager";
+import {GameManager} from "../GameManager";
+import {Helper} from "../Helper";
+import {CollectibleConsts, CollectibleType} from "../CollectibleConsts";
+import {SoundManager} from "../SoundManager";
 
 export class Collectible extends Phaser.GameObjects.GameObject {
     public image: Phaser.GameObjects.Image;
@@ -25,14 +25,21 @@ export class Collectible extends Phaser.GameObjects.GameObject {
         GameManager.I.scene.physics.add.collider(GameManager.I.playerPaddle.image, this.image, () => {
             collectible.onCollect();
             SoundManager.I.play_sound(collectible.collectSound);
-            this.image.destroy();
-            this.destroy();
+            this.destroy_this();
         });
 
         // @ts-ignore
         GameManager.I.scene.physics.add.collider(GameManager.I.bottomBorder, this.image, () => {
-            this.image.destroy();
-            this.destroy();
+            this.destroy_this();
         });
+        
+    }
+    
+    destroy_this() {
+        /* if this was a bigger project we would pool these objects and just hide them
+        * instead of destroying and recreating them for better performance
+        */
+        this.image.destroy();
+        this.destroy();
     }
 }

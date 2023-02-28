@@ -6,7 +6,7 @@ import {PlayerPaddle} from "./GameObjects/PlayerPaddle";
 import {SoundClip, SoundManager} from "./SoundManager";
 import {LoseScreen} from "./GameObjects/LoseScreen";
 import {BrickConsts} from "./BrickConsts";
-import {Collectible} from "./GameObjects/Collectible/Collectible";
+import {Collectible} from "./GameObjects/Collectible";
 
 export class GameManager {
     // singleton so I can always access the GameManager from anywhere, without needing to pass a reference
@@ -46,18 +46,12 @@ export class GameManager {
         this.scene = scene;
         this.cursors = scene.input.keyboard.createCursorKeys();
         this.spacebar = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        
         this.isBallResting = true;
         this.collectibleList = [];
         this.currentLevel = 1;
-        
-        let textY = GeneralConsts.SCREEN_HEIGHT - 50;
-        let textFontSize = 32;
-        this.livesText = scene.add.text(30, textY, "", { fontFamily: 'Arial', fontSize: textFontSize, color: '#ff0000' });
-        this.scoreText = scene.add.text(200, textY, "", { fontFamily: 'Arial', fontSize: textFontSize, color: '#ffffff' });
-        this.levelText = scene.add.text(430, textY, "", { fontFamily: 'Arial', fontSize: textFontSize, color: '#00ff00' });
-        this.progressText = scene.add.text(660, textY, "", { fontFamily: 'Arial', fontSize: textFontSize, color: '#ffffff' });
-        this.hintText = scene.add.text(250, GeneralConsts.SCREEN_CENTER_Y + 100, "", { fontFamily: 'Arial', fontSize: 20, color: '#ffffff' });
-        
+
+        this.init_texts();
         this.set_score(0);
 
         this.bottomBorder = scene.physics.add.image(GeneralConsts.SCREEN_WIDTH, GeneralConsts.SCREEN_HEIGHT - 80, 'whitePixel')
@@ -71,10 +65,14 @@ export class GameManager {
         this.load_level(this.currentLevel);
     }
     
-    start_ball_moving() {
-        this.isBallResting = false;
-        this.ball.start_ball_moving();
-        GameManager.I.set_hint_text_active(false);
+    private init_texts() {
+        let textY = GeneralConsts.SCREEN_HEIGHT - 50;
+        let textFontSize = 32;
+        this.livesText = this.scene.add.text(30, textY, "", { fontFamily: 'Arial', fontSize: textFontSize, color: '#ff0000' });
+        this.scoreText = this.scene.add.text(200, textY, "", { fontFamily: 'Arial', fontSize: textFontSize, color: '#ffffff' });
+        this.levelText = this.scene.add.text(430, textY, "", { fontFamily: 'Arial', fontSize: textFontSize, color: '#00ff00' });
+        this.progressText = this.scene.add.text(660, textY, "", { fontFamily: 'Arial', fontSize: textFontSize, color: '#ffffff' });
+        this.hintText = this.scene.add.text(250, GeneralConsts.SCREEN_CENTER_Y + 100, "", { fontFamily: 'Arial', fontSize: 20, color: '#ffffff' });
     }
     
     load_level(level: number) {
@@ -113,7 +111,7 @@ export class GameManager {
         this.update_hint_text();
     }
     
-    spawn_bricks() {
+    private spawn_bricks() {
         this.brickList = [];
         let rows = BrickConsts.ROW_AMOUNTS[this.currentLevel - 1];
         
@@ -135,7 +133,7 @@ export class GameManager {
         this.set_brick_destroy_count(this.bricksDestroyedThisLevel + 1);
     }
     
-    set_brick_destroy_count(value: number) {
+    private set_brick_destroy_count(value: number) {
         this.bricksDestroyedThisLevel = value;
         if (this.bricksDestroyedThisLevel >= this.bricksRequired) {
             if (this.currentLevel < GeneralConsts.MAX_LEVEL) {
@@ -152,10 +150,12 @@ export class GameManager {
     modify_score(value: number) {
         this.set_score(this.score + value);
     }
-    private set_score(value: number) {
+    
+    set_score(value: number) {
         this.score = value;
         this.scoreText.setText(`Score: ${this.score}`);
     }
+    
     set_lives(value: number) {
         this.lives = value;
         this.livesText.setText(`Lives: ${this.lives}`);
@@ -168,7 +168,7 @@ export class GameManager {
         this.hintText.visible = value;
     }
     
-    update_hint_text() {
+    private update_hint_text() {
         this.hintText.setText(GeneralConsts.CONTROL_HINT + "\n" + GeneralConsts.LEVEL_HINT[this.currentLevel - 1]);
         this.set_hint_text_active(true);
     }

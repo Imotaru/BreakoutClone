@@ -17,8 +17,8 @@ export class Ball extends Phaser.GameObjects.GameObject {
             .setBounce(1, 1)
             .setCollideWorldBounds(true);
         this.speed = BallConsts.DEFAULT_BALL_SPEED;
-        this.image.displayWidth = 18;
-        this.image.displayHeight = 18;
+        this.image.displayWidth = BallConsts.BALL_SIZE;
+        this.image.displayHeight = BallConsts.BALL_SIZE;
         this.temporarySpeedBoost = 0;
         this.temporarySpeedBoostDuration = 0;
 
@@ -98,7 +98,7 @@ export class Ball extends Phaser.GameObjects.GameObject {
         this.image.setTexture(BallConsts.SPEED_BOOSTED_BALL_TEXTURE)
     }
     
-    end_temporary_speed_boost() {
+    private end_temporary_speed_boost() {
         if (this.temporarySpeedBoost == 0) {
             return;
         }
@@ -109,6 +109,8 @@ export class Ball extends Phaser.GameObjects.GameObject {
     }
     
     start_ball_moving() {
+        GameManager.I.isBallResting = false;
+        GameManager.I.set_hint_text_active(false);
         // if the paddle has momentum we want to move the ball in the same direction
         let leftDown = GameManager.I.cursors.left.isDown;
         let rightDown = GameManager.I.cursors.right.isDown;

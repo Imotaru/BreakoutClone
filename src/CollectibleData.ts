@@ -7,10 +7,13 @@ export class CollectibleData {
     public spawnSound: SoundClip;
     public collectSound: SoundClip;
     public onCollect: Function;
-    public xSpeedGetter: Function;
-    public ySpeedGetter: Function;
+    public xSpeedGetter: (xPos: number, yPos: number) => number;
+    public ySpeedGetter: (xPos: number, yPos: number) => number;
     
-    constructor(spriteName: string, width: number, height: number, spawnSound: SoundClip, collectSound: SoundClip, onCollect: Function, xSpeedGetter: Function, ySpeedGetter: Function) {
+    constructor(spriteName: string, width: number, height: number, spawnSound: SoundClip,
+                collectSound: SoundClip, onCollect: Function,
+                xSpeedGetter: (x: number, y: number) => number,
+                ySpeedGetter: (x: number, y: number) => number) {
         this.spriteName = spriteName;
         this.width = width;
         this.height = height;
