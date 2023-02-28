@@ -21,14 +21,12 @@ export class Collectible extends Phaser.GameObjects.GameObject {
         SoundManager.I.play_sound(collectible.spawnSound);
         GameManager.I.collectibleList.push(this);
 
-        // @ts-ignore
         GameManager.I.scene.physics.add.collider(GameManager.I.playerPaddle.image, this.image, () => {
             collectible.onCollect();
             SoundManager.I.play_sound(collectible.collectSound);
             this.destroy_this();
         });
 
-        // @ts-ignore
         GameManager.I.scene.physics.add.collider(GameManager.I.bottomBorder, this.image, () => {
             this.destroy_this();
         });

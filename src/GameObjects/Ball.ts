@@ -22,7 +22,6 @@ export class Ball extends Phaser.GameObjects.GameObject {
         this.temporarySpeedBoost = 0;
         this.temporarySpeedBoostDuration = 0;
 
-        // @ts-ignore
         scene.physics.add.collider(GameManager.I.playerPaddle.image, this.image, () => {
             // comparing the y values to make sure the ball is hitting the top of the paddle and not the side
             if (this.image.y <= GameManager.I.playerPaddle.image.y) {
@@ -40,7 +39,6 @@ export class Ball extends Phaser.GameObjects.GameObject {
             }
         });
 
-        // @ts-ignore
         scene.physics.add.collider(GameManager.I.bottomBorder, this.image, () => {
             if (!GameManager.I.bottomBorder.body.touching.none) {
                 GameManager.I.set_lives(GameManager.I.lives - 1);

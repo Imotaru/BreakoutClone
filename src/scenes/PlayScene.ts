@@ -25,55 +25,30 @@ class GameScene extends Phaser.Scene {
 		this.load.image('lightning', '/assets/sprites/lightningBolt.png');
 		
 		// sounds
-		// @ts-ignore
 		this.load.audio('ballHit', '/assets/sounds/ballHit.ogg');
-		// @ts-ignore
 		this.load.audio('loseLife', '/assets/sounds/loseLife.ogg');
-		// @ts-ignore
 		this.load.audio('damage', '/assets/sounds/damage.wav');
-		// @ts-ignore
 		this.load.audio('music1', '/assets/music/DST-ForestTheme1.mp3');
-		// @ts-ignore
 		this.load.audio('music2', '/assets/music/DST-Aethereal.mp3');
-		// @ts-ignore
 		this.load.audio('music3', '/assets/music/DST-DreamMaster.mp3');
-		// @ts-ignore
 		this.load.audio('wolf1', '/assets/sounds/wolf1.ogg');
-		// @ts-ignore
 		this.load.audio('wolf2', '/assets/sounds/wolf2.ogg');
-		// @ts-ignore
 		this.load.audio('wolf3', '/assets/sounds/wolf3.ogg');
-		// @ts-ignore
 		this.load.audio('wolf4', '/assets/sounds/wolf4.ogg');
-		// @ts-ignore
 		this.load.audio('wolf5', '/assets/sounds/wolf5.ogg');
-		// @ts-ignore
 		this.load.audio('wolf6', '/assets/sounds/wolf6.ogg');
-		// @ts-ignore
 		this.load.audio('bonespear1', '/assets/sounds/bonespear1.wav');
-		// @ts-ignore
 		this.load.audio('bonespear2', '/assets/sounds/bonespear2.wav');
-		// @ts-ignore
 		this.load.audio('bonespear3', '/assets/sounds/bonespear3.wav');
-		// @ts-ignore
 		this.load.audio('bonespearhit', '/assets/sounds/bonespearhit.wav');
-		// @ts-ignore
 		this.load.audio('wolfBite', '/assets/sounds/wolfBite.ogg');
-		// @ts-ignore
 		this.load.audio('stickDrop', '/assets/sounds/stickDrop.wav');
-		// @ts-ignore
 		this.load.audio('stickCollect', '/assets/sounds/stickCollect.wav');
-		// @ts-ignore
 		this.load.audio('lightning1', '/assets/sounds/lightning1.wav');
-		// @ts-ignore
 		this.load.audio('lightning2', '/assets/sounds/lightning2.wav');
-		// @ts-ignore
 		this.load.audio('lightning3', '/assets/sounds/lightning3.wav');
-		// @ts-ignore
 		this.load.audio('lightningBoltImpact', '/assets/sounds/LightningBoltImpact.ogg');
-		// @ts-ignore
 		this.load.audio('ballSpeedUp', '/assets/sounds/ballSpeedUp.wav');
-		// @ts-ignore
 		this.load.audio('levelComplete', '/assets/sounds/LevelComplete.ogg');
 	}
 
