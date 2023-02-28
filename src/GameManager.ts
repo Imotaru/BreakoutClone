@@ -49,10 +49,13 @@ export class GameManager {
         this.collectibleList = [];
         this.currentLevel = 1; // todo reset
         
-        this.livesText = scene.add.text(30, GeneralConsts.SCREEN_HEIGHT - 50, "", { fontFamily: 'Arial', fontSize: 32, color: '#ff0000' });
-        this.scoreText = scene.add.text(200, GeneralConsts.SCREEN_HEIGHT - 50, "", { fontFamily: 'Arial', fontSize: 32, color: '#ffffff' });
-        this.levelText = scene.add.text(430, GeneralConsts.SCREEN_HEIGHT - 50, "", { fontFamily: 'Arial', fontSize: 32, color: '#00ff00' });
-        this.progressText = scene.add.text(660, GeneralConsts.SCREEN_HEIGHT - 50, "", { fontFamily: 'Arial', fontSize: 32, color: '#ffffff' });
+        let textY = GeneralConsts.SCREEN_HEIGHT - 50;
+        let textFontSize = 32;
+        this.livesText = scene.add.text(30, textY, "", { fontFamily: 'Arial', fontSize: textFontSize, color: '#ff0000' });
+        this.scoreText = scene.add.text(200, textY, "", { fontFamily: 'Arial', fontSize: textFontSize, color: '#ffffff' });
+        this.levelText = scene.add.text(430, textY, "", { fontFamily: 'Arial', fontSize: textFontSize, color: '#00ff00' });
+        this.progressText = scene.add.text(660, textY, "", { fontFamily: 'Arial', fontSize: textFontSize, color: '#ffffff' });
+        
         this.set_score(0);
 
         this.bottomBorder = scene.physics.add.image(GeneralConsts.SCREEN_WIDTH, GeneralConsts.SCREEN_HEIGHT - 80, 'whitePixel')
@@ -77,7 +80,7 @@ export class GameManager {
         }
         
         this.currentLevel = level;
-        this.levelText.setText(`Level: ${level}`);
+        this.levelText.setText(`Level: ${level} / ${GeneralConsts.MAX_LEVEL}`);
 
         if (this.brickList != null) {
             for (let i = 0; i < this.brickList.length; i++) {
@@ -135,7 +138,8 @@ export class GameManager {
                 this.load_level(this.currentLevel + 1);
             }
         }
-        this.progressText.setText(`Progress: ${Math.floor(100 * this.bricksDestroyedThisLevel / this.totalBricks)}% / ${Math.floor(BrickConsts.BRICK_PERCENTAGE_REQUIRED * 100)}%`)
+        this.progressText.setText(
+            `Progress: ${Math.floor(100 * this.bricksDestroyedThisLevel / this.totalBricks)}% / ${Math.floor(100 * BrickConsts.BRICK_PERCENTAGE_REQUIRED)}%`)
     }
 
     modify_score(value: number) {
