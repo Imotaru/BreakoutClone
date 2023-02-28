@@ -64,6 +64,13 @@ export class CollectibleConsts {
                 GameManager.I.playerPaddle.modify_width(-12);
                 GameManager.I.modify_score(-3);
             },
+            /* The reason we do the math in the xSpeedGetter and ySpeedGetter is this:
+            * the bone spear gets launched in the direction of the player paddle,
+            * and because we are just taking the difference between the positions it would mean that
+            * the farther away the spear is when it spawns, the faster it would be since the difference is higher.
+            * To fix that we need to normalize the vector, so that the speed is consistent no matter the distance,
+            * but the direction is still the same.
+            * */
             // xSpeedGetter
             (x: number, y: number) => {
                 let xDiff = (GameManager.I.playerPaddle.image.x - x);
