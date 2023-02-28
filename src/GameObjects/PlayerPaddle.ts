@@ -44,6 +44,7 @@ export class PlayerPaddle extends Phaser.GameObjects.GameObject {
         this.width = PlayerConsts.DEFAULT_PADDLE_WIDTH;
         this.image.displayWidth = this.width;
         this.stunDurationLeft = 0;
+        this.image.x = GeneralConsts.SCREEN_CENTER_X;
     }
     
     add_stun_duration(value: number) {
