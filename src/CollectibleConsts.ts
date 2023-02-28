@@ -24,11 +24,11 @@ export class CollectibleConsts {
                 GameManager.I.modify_score(-2);
             },
             // xSpeedGetter
-            (x: number) => {
+            (x: number, y: number) => {
                 return -30 + Math.random() * 60;
             },
             // ySpeedGetter
-            (y: number) => {
+            (x: number, y: number) => {
                 return 180 + Math.random() * 40;
             }),
         [CollectibleType.Stick]: new CollectibleData('stick', 50, 25, SoundClip.stickDrop, SoundClip.stickCollect,
@@ -38,11 +38,11 @@ export class CollectibleConsts {
                 GameManager.I.modify_score(1);
             },
             // xSpeedGetter
-            (x: number) => {
+            (x: number, y: number) => {
                 return 0;
             },
             // ySpeedGetter
-            (y: number) => {
+            (x: number, y: number) => {
                 return 80 + Math.random() * 40;
             }),
         [CollectibleType.Lightning]: new CollectibleData('lightning', 25, 50, SoundClip.lightning, SoundClip.lightningBoltImpact,
@@ -51,11 +51,11 @@ export class CollectibleConsts {
                 GameManager.I.playerPaddle.add_stun_duration(600);
             },
             // xSpeedGetter
-            (x: number) => {
+            (x: number, y: number) => {
                 return 0;
             },
             // ySpeedGetter
-            (y: number) => {
+            (x: number, y: number) => {
                 return 450 + Math.random() * 100;
             }),
         [CollectibleType.BoneSpear]: new CollectibleData('boneSpear', 8, 60, SoundClip.boneSpear, SoundClip.boneSpearHit,
@@ -65,12 +65,18 @@ export class CollectibleConsts {
                 GameManager.I.modify_score(-3);
             },
             // xSpeedGetter
-            (x: number) => {
-                return (GameManager.I.playerPaddle.image.x - x) * (0.65 + 0.15 * Math.random());
+            (x: number, y: number) => {
+                let xDiff = (GameManager.I.playerPaddle.image.x - x);
+                let yDiff = (GameManager.I.playerPaddle.image.y - y);
+                let magnitude = Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2))
+                return (xDiff / magnitude) * (220 + 60 * Math.random());
             },
             // ySpeedGetter
-            (y: number) => {
-                return (GameManager.I.playerPaddle.image.y - y) * (0.65 + 0.15 * Math.random());
+            (x: number, y: number) => {
+                let xDiff = (GameManager.I.playerPaddle.image.x - x);
+                let yDiff = (GameManager.I.playerPaddle.image.y - y);
+                let magnitude = Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2))
+                return (yDiff / magnitude) * (220 + 60 * Math.random());
             }),
     };
 }
