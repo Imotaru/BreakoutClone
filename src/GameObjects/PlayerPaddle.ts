@@ -40,9 +40,10 @@ export class PlayerPaddle extends Phaser.GameObjects.GameObject {
         this.image.displayWidth = this.width;
     }
     
-    reset_width() {
+    reset_paddle() {
         this.width = PlayerConsts.DEFAULT_PADDLE_WIDTH;
         this.image.displayWidth = this.width;
+        this.stunDurationLeft = 0;
     }
     
     add_stun_duration(value: number) {

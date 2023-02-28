@@ -108,7 +108,7 @@ export class GameManager {
         this.bricksRequired = this.totalBricks * BrickConsts.BRICK_PERCENTAGE_REQUIRED;
         this.set_brick_destroy_count(0);
         this.ball.reset_ball_speed();
-        this.playerPaddle.reset_width();
+        this.playerPaddle.reset_paddle();
         this.reset_ball();
     }
     
