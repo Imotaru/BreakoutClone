@@ -140,6 +140,8 @@ export class GameManager {
         if (this.bricksDestroyedThisLevel >= this.bricksRequired) {
             if (this.currentLevel < GeneralConsts.MAX_LEVEL) {
                 this.load_level(this.currentLevel + 1);
+            } else {
+                this.load_level(GeneralConsts.MAX_LEVEL);
             }
             SoundManager.I.play_sound(SoundClip.levelComplete);
         }
