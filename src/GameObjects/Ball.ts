@@ -55,6 +55,7 @@ export class Ball extends Phaser.GameObjects.GameObject {
         this.end_temporary_speed_boost();
         this.image.body.setVelocity(0, 0);
         GameManager.I.isBallResting = true;
+        this.image.x = GameManager.I.playerPaddle.image.x;
         this.image.y = GameManager.I.playerPaddle.image.y + BallConsts.BALL_REST_Y_OFFSET;
     }
 
