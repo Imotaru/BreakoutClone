@@ -9,6 +9,12 @@ export enum CollectibleType {
 }
 
 export class CollectibleConsts {
+    
+    /* The reason to have this collectible data is because before I had each collectible be its own class
+     * but it resulted in a lot of code duplication and if I wanted to make a change
+     * I had to make it in many different places and it was easy to forgot one.
+     * Now all the data is in one place and there is only one class for collectibles.
+     */
     static readonly COLLECTIBLE_DATA: Record<CollectibleType, CollectibleData> = {
         [CollectibleType.Wolf]: new CollectibleData('wolf', 20, 60, SoundClip.wolf, SoundClip.wolfBite,
             // onCollect
