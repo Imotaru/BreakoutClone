@@ -87,7 +87,7 @@ class GameScene extends Phaser.Scene {
 			if (GameManager.I.cursors.up.isDown) {
 				GameManager.I.start_ball_moving();
 			}
-			GameManager.I.ball.sprite.x = GameManager.I.playerPaddle.sprite.x;
+			GameManager.I.ball.image.x = GameManager.I.playerPaddle.image.x;
 		}
 	}
 }

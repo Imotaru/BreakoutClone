@@ -6,30 +6,30 @@ import {SoundClip, SoundManager} from "../SoundManager";
 
 export class Ball extends Phaser.GameObjects.GameObject {
     public speed: number;
-    public sprite: Phaser.GameObjects.Image;
+    public image: Phaser.GameObjects.Image;
     
     constructor(scene: Phaser.Scene) {
         super(scene, 'ball');
-        this.sprite = scene.physics.add.image(GeneralConsts.SCREEN_CENTER_X, GeneralConsts.SCREEN_CENTER_Y, 'ball')
+        this.image = scene.physics.add.image(GeneralConsts.SCREEN_CENTER_X, GeneralConsts.SCREEN_CENTER_Y, 'ball')
             .setVelocity(BallConsts.DEFAULT_BALL_SPEED, BallConsts.DEFAULT_BALL_SPEED)
             .setBounce(1, 1)
             .setCollideWorldBounds(true);
         this.speed = BallConsts.DEFAULT_BALL_SPEED;
-        this.sprite.displayWidth = 18;
-        this.sprite.displayHeight = 18;
+        this.image.displayWidth = 18;
+        this.image.displayHeight = 18;
 
         // @ts-ignore
-        scene.physics.add.collider(GameManager.I.playerPaddle.sprite, this.sprite, () => {
+        scene.physics.add.collider(GameManager.I.playerPaddle.image, this.image, () => {
             // comparing the y values to make sure the ball is hitting the top of the paddle and not the side
-            if (this.sprite.y <= GameManager.I.playerPaddle.sprite.y) {
+            if (this.image.y <= GameManager.I.playerPaddle.image.y) {
                 // if the paddle has momentum we want to move the ball in the same direction
                 let leftDown = GameManager.I.cursors.left.isDown;
                 let rightDown = GameManager.I.cursors.right.isDown;
                 if (!leftDown || !rightDown) {
                     if (leftDown) {
-                        this.sprite.body.setVelocity(-this.speed, -this.speed);
+                        this.image.body.setVelocity(-this.speed, -this.speed);
                     } else if (rightDown) {
-                        this.sprite.body.setVelocity(this.speed, -this.speed);
+                        this.image.body.setVelocity(this.speed, -this.speed);
                     }
                 }
                 SoundManager.I.play_sound(SoundClip.ballHit);
@@ -37,7 +37,7 @@ export class Ball extends Phaser.GameObjects.GameObject {
         });
 
         // @ts-ignore
-        scene.physics.add.collider(GameManager.I.bottomBorder, this.sprite, () => {
+        scene.physics.add.collider(GameManager.I.bottomBorder, this.image, () => {
             if (!GameManager.I.bottomBorder.body.touching.none) {
                 GameManager.I.set_lives(GameManager.I.lives - 1);
                 SoundManager.I.play_sound(SoundClip.loseLife);
@@ -47,7 +47,7 @@ export class Ball extends Phaser.GameObjects.GameObject {
     }
     
     reset_ball() {
-        this.sprite.body.setVelocity(0, 0);
+        this.image.body.setVelocity(0, 0);
     }
 
     reset_ball_speed() {
@@ -57,18 +57,18 @@ export class Ball extends Phaser.GameObjects.GameObject {
     modify_ball_speed(value: number) {
         this.speed += value;
         let newX;
-        if (this.sprite.body.velocity.x > 0) {
+        if (this.image.body.velocity.x > 0) {
             newX = this.speed + value;
         } else {
             newX = -this.speed - value;
         }
         let newY;
-        if (this.sprite.body.velocity.y > 0) {
+        if (this.image.body.velocity.y > 0) {
             newY = this.speed + value;
         } else {
             newY = -this.speed - value;
         }
-        this.sprite.body.setVelocity(newX, newY)
+        this.image.body.setVelocity(newX, newY)
     }
     
     start_ball_moving() {
@@ -77,14 +77,14 @@ export class Ball extends Phaser.GameObjects.GameObject {
         let rightDown = GameManager.I.cursors.right.isDown;
         if (!leftDown || !rightDown) {
             if (leftDown) {
-                this.sprite.body.setVelocity(-this.speed, -this.speed);
+                this.image.body.setVelocity(-this.speed, -this.speed);
                 return;
             } else if (rightDown) {
-                this.sprite.body.setVelocity(this.speed, -this.speed);
+                this.image.body.setVelocity(this.speed, -this.speed);
                 return;
             }
         }
         // if paddle has no momentum the ball starts in a random direction
-        this.sprite.body.setVelocity(Math.random() <= 0.5 ? -this.speed : this.speed, -this.speed);
+        this.image.body.setVelocity(Math.random() <= 0.5 ? -this.speed : this.speed, -this.speed);
     }
 }

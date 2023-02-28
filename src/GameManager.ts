@@ -70,7 +70,7 @@ export class GameManager {
     
     reset_ball() {
         this.isBallResting = true;
-        this.ball.sprite.y = this.playerPaddle.sprite.y - 27;
+        this.ball.image.y = this.playerPaddle.image.y - 27;
         this.ball.reset_ball();
     }
     
@@ -85,7 +85,7 @@ export class GameManager {
         if (this.brickList != null) {
             for (let i = 0; i < this.brickList.length; i++) {
                 if (this.brickList[i] != null) {
-                    this.brickList[i].sprite.destroy();
+                    this.brickList[i].image.destroy();
                     this.brickList[i].destroy();
                 }
             }
@@ -148,7 +148,7 @@ export class GameManager {
     
     private show_lose_screen() {
         this.isLoseScreenOpen = true;
-        this.playerPaddle.sprite.body.setVelocity(0, 0);
+        this.playerPaddle.image.body.setVelocity(0, 0);
         new LoseScreen();
     }
 }
