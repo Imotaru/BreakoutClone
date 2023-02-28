@@ -1,5 +1,6 @@
 ﻿import {Collectible} from "./GameObjects/Collectible/Collectible";
 import {CollectibleType} from "./CollectibleConsts";
+import {GameManager} from "./GameManager";
 
 export class BrickConsts {
     static BRICK_SPRITES: Array<string> = ['bush', 'cloud', 'bonePile']
@@ -13,8 +14,10 @@ export class BrickConsts {
             }
         },
         (x: number, y: number) => {
-            if (Math.random() < 0.5) {
+            if (Math.random() < 0.45) {
                 new Collectible(CollectibleType.Lightning, x, y);
+            } else if (Math.random() < 0.2) {
+                GameManager.I.ball.temporarily_increase_ball_speed(60, 1400);
             }
         },
         (x: number, y: number) => {

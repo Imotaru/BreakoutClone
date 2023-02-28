@@ -71,12 +71,6 @@ export class GameManager {
         this.ball.start_ball_moving();
     }
     
-    reset_ball() {
-        this.isBallResting = true;
-        this.ball.image.y = this.playerPaddle.image.y - 27;
-        this.ball.reset_ball();
-    }
-    
     load_level(level: number) {
         if (level <= 0 || level > GeneralConsts.MAX_LEVEL) {
             return;
@@ -109,7 +103,7 @@ export class GameManager {
         this.set_brick_destroy_count(0);
         this.ball.reset_ball_speed();
         this.playerPaddle.reset_paddle();
-        this.reset_ball();
+        this.ball.rest_ball();
     }
     
     spawn_bricks() {

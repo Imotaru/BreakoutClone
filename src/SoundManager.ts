@@ -12,6 +12,7 @@ export enum SoundClip {
     stickCollect,
     lightning,
     lightningBoltImpact,
+    ballSpeedUp,
 }
 
 export class SoundManager {
@@ -55,6 +56,9 @@ export class SoundManager {
             ],
             [SoundClip.lightningBoltImpact]: [
                 scene.sound.add('lightningBoltImpact')
+            ],
+            [SoundClip.ballSpeedUp]: [
+                scene.sound.add('ballSpeedUp')
             ],
         };
 

@@ -13,6 +13,7 @@ class GameScene extends Phaser.Scene {
 		// images
 		this.load.image('player', '/assets/sprites/paddle.png');
 		this.load.image('ball', '/assets/sprites/ball.png');
+		this.load.image('ballYellow', '/assets/sprites/ballYellow.png');
 		this.load.image('bush', '/assets/sprites/bush.png');
 		this.load.image('cloud', '/assets/sprites/cloud.png');
 		this.load.image('bonePile', '/assets/sprites/bonePile.png');
@@ -70,6 +71,8 @@ class GameScene extends Phaser.Scene {
 		this.load.audio('lightning3', '/assets/sounds/lightning3.wav');
 		// @ts-ignore
 		this.load.audio('lightningBoltImpact', '/assets/sounds/LightningBoltImpact.ogg');
+		// @ts-ignore
+		this.load.audio('ballSpeedUp', '/assets/sounds/ballSpeedUp.wav');
 	}
 
 	create() {
@@ -96,6 +99,7 @@ class GameScene extends Phaser.Scene {
 		}
 		
 		GameManager.I.playerPaddle.player_update(delta);
+		GameManager.I.ball.update_ball(delta);
 		
 		// if ball is resting then the up arrow make it start, else the ball just follows the paddle on the x axis
 		if (GameManager.I.isBallResting) {
