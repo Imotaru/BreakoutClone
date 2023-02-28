@@ -48,7 +48,7 @@ export class GameManager {
         this.spacebar = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.isBallResting = true;
         this.collectibleList = [];
-        this.currentLevel = 1; // todo reset
+        this.currentLevel = 1;
         
         let textY = GeneralConsts.SCREEN_HEIGHT - 50;
         let textFontSize = 32;
