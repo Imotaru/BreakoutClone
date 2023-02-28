@@ -10,8 +10,8 @@ export class Collectible extends Phaser.GameObjects.GameObject {
     constructor(collectibleType: CollectibleType, xPos: number, yPos: number) {
         let collectible = CollectibleConsts.COLLECTIBLE_DATA[collectibleType];
         super(GameManager.I.scene, collectible.spriteName);
-        let xVelocity = collectible.xSpeedGetter();
-        let yVelocity = collectible.ySpeedGetter();
+        let xVelocity = collectible.xSpeedGetter(xPos);
+        let yVelocity = collectible.ySpeedGetter(yPos);
         this.image = this.scene.physics.add.image(xPos, yPos, collectible.spriteName)
             .setVelocity(xVelocity, yVelocity)
         ;

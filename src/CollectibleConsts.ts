@@ -24,11 +24,11 @@ export class CollectibleConsts {
                 GameManager.I.modify_score(-2);
             },
             // xSpeedGetter
-            () => {
+            (x: number) => {
                 return -30 + Math.random() * 60;
             },
             // ySpeedGetter
-            () => {
+            (y: number) => {
                 return 180 + Math.random() * 40;
             }),
         [CollectibleType.Stick]: new CollectibleData('stick', 50, 25, SoundClip.stickDrop, SoundClip.stickCollect,
@@ -38,11 +38,11 @@ export class CollectibleConsts {
                 GameManager.I.modify_score(1);
             },
             // xSpeedGetter
-            () => {
+            (x: number) => {
                 return 0;
             },
             // ySpeedGetter
-            () => {
+            (y: number) => {
                 return 80 + Math.random() * 40;
             }),
         [CollectibleType.Lightning]: new CollectibleData('lightning', 25, 50, SoundClip.lightning, SoundClip.lightningBoltImpact,
@@ -51,26 +51,26 @@ export class CollectibleConsts {
                 GameManager.I.playerPaddle.add_stun_duration(600);
             },
             // xSpeedGetter
-            () => {
+            (x: number) => {
                 return 0;
             },
             // ySpeedGetter
-            () => {
+            (y: number) => {
                 return 450 + Math.random() * 100;
             }),
         [CollectibleType.BoneSpear]: new CollectibleData('boneSpear', 8, 60, SoundClip.boneSpear, SoundClip.boneSpearHit,
             // onCollect
             () => {
-                GameManager.I.playerPaddle.modify_width(-15);
+                GameManager.I.playerPaddle.modify_width(-12);
                 GameManager.I.modify_score(-3);
             },
             // xSpeedGetter
-            () => {
-                return (90 + Math.random() * 60) * (Math.random() <= 0.5 ? -1 : 1);
+            (x: number) => {
+                return (GameManager.I.playerPaddle.image.x - x) * (0.65 + 0.15 * Math.random());
             },
             // ySpeedGetter
-            () => {
-                return 210 + Math.random() * 20;
+            (y: number) => {
+                return (GameManager.I.playerPaddle.image.y - y) * (0.65 + 0.15 * Math.random());
             }),
     };
 }
