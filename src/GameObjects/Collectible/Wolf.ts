@@ -2,12 +2,11 @@
 import {GameManager} from "../../GameManager";
 import {SoundClip, SoundManager} from "../../SoundManager";
 import {Helper} from "../../Helper";
+import {Collectible} from "./Collectible";
 
-export class Wolf extends Phaser.GameObjects.GameObject {
-    public image: Phaser.GameObjects.Image;
-
+export class Wolf extends Collectible {
     constructor(x: number, y: number) {
-        super(GameManager.I.scene, 'wolf');
+        super('wolf');
         let xVelocity = -30 + Math.random() * 60;
         let yVelocity = 180 + Math.random() * 40;
         this.image = this.scene.physics.add.image(x, y, 'wolf')

@@ -2,12 +2,11 @@
 import {GameManager} from "../../GameManager";
 import {SoundClip, SoundManager} from "../../SoundManager";
 import {Helper} from "../../Helper";
+import {Collectible} from "./Collectible";
 
-export class BoneSpear extends Phaser.GameObjects.GameObject {
-    public image: Phaser.GameObjects.Image;
-
+export class BoneSpear extends Collectible {
     constructor(x: number, y: number) {
-        super(GameManager.I.scene, 'boneSpear');
+        super('boneSpear');
         let xVelocity = (90 + Math.random() * 60) * (Math.random() <= 0.5 ? -1 : 1);
         let yVelocity = 210 + Math.random() * 20;
         this.image = this.scene.physics.add.image(x, y, 'boneSpear')

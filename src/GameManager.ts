@@ -6,6 +6,7 @@ import {PlayerPaddle} from "./GameObjects/PlayerPaddle";
 import {SoundManager} from "./SoundManager";
 import {LoseScreen} from "./GameObjects/LoseScreen";
 import {BrickConsts} from "./BrickConsts";
+import {Collectible} from "./GameObjects/Collectible/Collectible";
 
 export class GameManager {
     // singleton so I can always access the GameManager from anywhere, without needing to pass a reference
@@ -24,6 +25,7 @@ export class GameManager {
     // game objects and images
     bottomBorder: Phaser.GameObjects.Image;
     brickList: Array<Brick>;
+    collectibleList: Array<Collectible>;
     ball: Ball;
     playerPaddle: PlayerPaddle;
 
@@ -44,7 +46,8 @@ export class GameManager {
         this.cursors = scene.input.keyboard.createCursorKeys();
         this.spacebar = scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         this.isBallResting = true;
-        this.currentLevel = 3; // todo reset
+        this.collectibleList = [];
+        this.currentLevel = 1; // todo reset
         
         this.livesText = scene.add.text(30, GeneralConsts.SCREEN_HEIGHT - 50, "", { fontFamily: 'Arial', fontSize: 32, color: '#ff0000' });
         this.scoreText = scene.add.text(200, GeneralConsts.SCREEN_HEIGHT - 50, "", { fontFamily: 'Arial', fontSize: 32, color: '#ffffff' });
@@ -91,6 +94,13 @@ export class GameManager {
             }
         }
         this.spawn_bricks();
+        
+        for (let i = 0; i < this.collectibleList.length; i++) {
+            if (this.collectibleList[i] != null) {
+                this.collectibleList[i].image.destroy();
+                this.collectibleList[i].destroy();
+            }
+        }
         
         SoundManager.I.play_music(level);
         this.set_lives(3);

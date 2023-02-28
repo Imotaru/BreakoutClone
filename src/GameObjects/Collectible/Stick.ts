@@ -1,15 +1,13 @@
 ﻿import 'phaser';
 import {GameManager} from "../../GameManager";
 import {SoundClip, SoundManager} from "../../SoundManager";
+import {Collectible} from "./Collectible";
 
-export class Stick extends Phaser.GameObjects.GameObject {
-    public image: Phaser.GameObjects.Image;
-
+export class Stick extends Collectible {
     constructor(x: number, y: number) {
-        super(GameManager.I.scene, 'stick');
+        super('stick');
         this.image = this.scene.physics.add.image(x, y, 'stick')
             .setVelocity(0, 80 + Math.random() * 40);
-        ;
         this.image.displayWidth = 50;
         this.image.displayHeight = 25;
 

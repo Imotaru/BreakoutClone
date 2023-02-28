@@ -22,5 +22,6 @@
 		"src/GameObjects/Collectible/Wolf.ts",
 		"src/GameObjects/Collectible/Stick.ts",
 		"src/GameObjects/Collectible/BoneSpear.ts",
+		"src/GameObjects/Collectible/Collectible.ts",
 	]
 }
