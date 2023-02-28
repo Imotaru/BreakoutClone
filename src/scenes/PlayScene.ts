@@ -18,6 +18,7 @@ class GameScene extends Phaser.Scene {
 		this.load.image('bonePile', '/assets/sprites/bonePile.png');
 		this.load.image('whitePixel', '/assets/sprites/whitePixel.png');
 		this.load.image('wolf', '/assets/sprites/wolf.png');
+		this.load.image('stick', '/assets/sprites/stick.png');
 		this.load.image('boneSpear', '/assets/sprites/boneSpear.png');
 		this.load.image('panel', '/assets/sprites/panel.png');
 		
@@ -56,6 +57,10 @@ class GameScene extends Phaser.Scene {
 		this.load.audio('bonespearhit', '/assets/sounds/bonespearhit.wav');
 		// @ts-ignore
 		this.load.audio('wolfBite', '/assets/sounds/wolfBite.ogg');
+		// @ts-ignore
+		this.load.audio('stickDrop', '/assets/sounds/stickDrop.wav');
+		// @ts-ignore
+		this.load.audio('stickCollect', '/assets/sounds/stickCollect.wav');
 	}
 
 	create() {

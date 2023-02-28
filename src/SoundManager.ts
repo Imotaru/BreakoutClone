@@ -8,6 +8,8 @@ export enum SoundClip {
     wolfBite,
     boneSpear,
     boneSpearHit,
+    stickDrop,
+    stickCollect,
 }
 
 export class SoundManager {
@@ -23,6 +25,8 @@ export class SoundManager {
     wolfBite: Phaser.Sound.BaseSound;
     boneSpearHit: Phaser.Sound.BaseSound;
     music: Array<Phaser.Sound.BaseSound>;
+    stickDrop: Phaser.Sound.BaseSound;
+    stickCollect: Phaser.Sound.BaseSound;
     
     constructor(scene: Phaser.Scene) {
         SoundManager.I = this;
@@ -44,6 +48,8 @@ export class SoundManager {
             scene.sound.add('bonespear3'),
         ]
         this.boneSpearHit = scene.sound.add('bonespearhit');
+        this.stickDrop = scene.sound.add('stickDrop');
+        this.stickCollect = scene.sound.add('stickCollect');
         this.music = [
             scene.sound.add('music1', {
                 loop: true,
@@ -83,6 +89,12 @@ export class SoundManager {
                 break;
             case SoundClip.boneSpearHit:
                 this.boneSpearHit.play();
+                break;
+            case SoundClip.stickDrop:
+                this.stickDrop.play();
+                break;
+            case SoundClip.stickCollect:
+                this.stickCollect.play();
                 break;
         }
     }

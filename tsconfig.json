@@ -20,6 +20,7 @@
 		"src/GameManager.ts",
 		"src/SoundManager.ts",
 		"src/GameObjects/Collectible/Wolf.ts",
+		"src/GameObjects/Collectible/Stick.ts",
 		"src/GameObjects/Collectible/BoneSpear.ts",
 	]
 }

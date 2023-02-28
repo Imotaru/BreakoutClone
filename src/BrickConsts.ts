@@ -1,5 +1,6 @@
 ﻿import {Wolf} from "./GameObjects/Collectible/Wolf";
 import {BoneSpear} from "./GameObjects/Collectible/BoneSpear";
+import {Stick} from "./GameObjects/Collectible/Stick";
 
 export class BrickConsts {
     static BRICK_SPRITES: Array<string> = ['bush', 'cloud', 'bonePile']
@@ -8,6 +9,8 @@ export class BrickConsts {
         (x: number, y: number) => {
             if (Math.random() < 0.3) {
                 new Wolf(x, y);
+            } else if (Math.random() < 0.15) {
+                new Stick(x, y);
             }
         },
         (x: number, y: number) => {
