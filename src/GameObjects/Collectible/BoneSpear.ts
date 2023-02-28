@@ -13,6 +13,9 @@ export class BoneSpear extends Phaser.GameObjects.GameObject {
         this.image = this.scene.physics.add.image(x, y, 'boneSpear')
             .setVelocity(xVelocity, yVelocity)
         ;
+        /* this only rotates the image, but the hitbox is still the same
+         I read online that I can't rotate the hitbox using arcade physics, but this is not worth the refactor for this
+         alternative solution would be to make the hitbox bigger, but that's just worse because a thin spear ends up becoming a big box */
         this.image.setRotation(Helper.get_rotation_of_movement_vector(xVelocity, yVelocity));
         this.image.displayWidth = 8;
         this.image.displayHeight = 80;
